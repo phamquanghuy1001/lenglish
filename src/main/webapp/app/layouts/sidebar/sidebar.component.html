@@ -1,0 +1,26 @@
+<div>
+    <div class="card jh-card">
+        <div style="display: block; width:100%;">
+            <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"></canvas>
+            <h3 class="text-center" *ngIf="customerUser">{{customerUser.todayPoint}} / {{customerUser.dateGoal}}</h3>
+        </div>
+    </div>
+    <div class="card jh-card">
+
+        <h6>Bảng xếp hạng</h6>
+        <table class="table">
+            <tbody>
+                <tr *ngFor="let customerUser of customerUsers">
+                    <td *ngIf="customerUser.icon">
+                        <img [src]="'data:' + customerUser.iconContentType + ';base64,' + customerUser.icon" style="max-width: 50px;" alt="customerUser image"
+                        />
+                    </td>
+                    <td>{{customerUser.user.login}}</td>
+                    <td>{{customerUser.point}} Point</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div>
+    <h2>
+        <span jhiTranslate="lenglishApp.question.home.title">Questions</span>
+        <button class="btn btn-primary float-right jh-create-entity create-question" [routerLink]="['/', { outlets: { popup: ['question-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="lenglishApp.question.home.createLabel">
+            Create new Question
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="questions">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="createDate"><span jhiTranslate="lenglishApp.question.createDate">Create Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="questionType"><span jhiTranslate="lenglishApp.question.questionType">Question Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="content"><span jhiTranslate="lenglishApp.question.content">Content</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="image"><span jhiTranslate="lenglishApp.question.image">Image</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="resource"><span jhiTranslate="lenglishApp.question.resource">Resource</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lessonId"><span jhiTranslate="lenglishApp.question.lesson">Lesson</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let question of questions ;trackBy: trackId">
+                <td><a [routerLink]="['../question', question.id ]">{{question.id}}</a></td>
+                <td>{{question.createDate | date:'medium'}}</td>
+                <td jhiTranslate="{{'lenglishApp.QuestionType.' + question.questionType}}">{{question.questionType}}</td>
+                <td>{{question.content}}</td>
+                <td>
+                    <a *ngIf="question.image" (click)="openFile(question.imageContentType, question.image)">
+                        <img [src]="'data:' + question.imageContentType + ';base64,' + question.image" style="max-height: 30px;" alt="question image"/>
+                    </a>
+                    <span *ngIf="question.image">{{question.imageContentType}}, {{byteSize(question.image)}}</span>
+                </td>
+                <td>
+                    <a *ngIf="question.resource" (click)="openFile(question.resourceContentType, question.resource)" jhiTranslate="entity.action.open">open</a>
+                    <span *ngIf="question.resource">{{question.resourceContentType}}, {{byteSize(question.resource)}}</span>
+                </td>
+                <td>
+                    <div *ngIf="question.lessonId">
+                        <a [routerLink]="['../lesson', question.lessonId  ]" >{{question.lessonId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../question', question.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'question/'+ question.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'question/'+ question.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="questions && questions.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

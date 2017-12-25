@@ -1,0 +1,54 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "customerUser"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "room",
+            "otherEntityName": "room",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "icon",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "point",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "level",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "todayPoint",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "dateGoal",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20171217084533",
+    "entityTableName": "customer_user",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false
+}

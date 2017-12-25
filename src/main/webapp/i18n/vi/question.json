@@ -1,0 +1,27 @@
+{
+    "lenglishApp": {
+        "question" : {
+            "home": {
+                "title": "Questions",
+                "createLabel": "Thêm mới một Question",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Question"
+            },
+            "created": "Một Question mới được tạo với định danh {{ param }}",
+            "updated": "Một Question cập nhật với định danh {{ param }}",
+            "deleted": "Một Question đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Question {{ id }}?"
+            },
+            "detail": {
+                "title": "Question"
+            },
+            "createDate": "Create Date",
+            "questionType": "Question Type",
+            "content": "Content",
+            "image": "Image",
+            "resource": "Resource",
+            "lesson": "Lesson",
+            "test": "Test"
+        }
+    }
+}

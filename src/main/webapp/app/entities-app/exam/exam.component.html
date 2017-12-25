@@ -1,0 +1,77 @@
+<div>
+    <h2>
+        <span jhiTranslate="lenglishApp.exam.home.title">Exams</span>
+        <button class="btn btn-primary float-right jh-create-entity create-exam" [routerLink]="['/', { outlets: { popup: ['exam-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="lenglishApp.exam.home.createLabel">
+            Create new Exam
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="exams">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="createDate"><span jhiTranslate="lenglishApp.exam.createDate">Create Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="image"><span jhiTranslate="lenglishApp.exam.image">Image</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="title"><span jhiTranslate="lenglishApp.exam.title">Title</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="content"><span jhiTranslate="lenglishApp.exam.content">Content</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="point"><span jhiTranslate="lenglishApp.exam.point">Point</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let exam of exams ;trackBy: trackId">
+                <td><a [routerLink]="['../exam', exam.id ]">{{exam.id}}</a></td>
+                <td>{{exam.createDate | date:'medium'}}</td>
+                <td>
+                    <a *ngIf="exam.image" (click)="openFile(exam.imageContentType, exam.image)">
+                        <img [src]="'data:' + exam.imageContentType + ';base64,' + exam.image" style="max-height: 30px;" alt="exam image"/>
+                    </a>
+                    <span *ngIf="exam.image">{{exam.imageContentType}}, {{byteSize(exam.image)}}</span>
+                </td>
+                <td>{{exam.title}}</td>
+                <td>{{exam.content}}</td>
+                <td>{{exam.point}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../exam', exam.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'exam/'+ exam.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'exam/'+ exam.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="exams && exams.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

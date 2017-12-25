@@ -1,0 +1,38 @@
+<div *ngIf="room">
+    <h2>
+        <span jhiTranslate="lenglishApp.room.detail.title">Room</span>: {{room.title}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <div class="container">
+        <img src="https://www.w3schools.com/w3images/bandmember.jpg" alt="Avatar">
+        <p>Hello. How are you today?</p>
+        <span class="time-right">11:00</span>
+    </div>
+
+    <div class="container darker">
+        <img src="https://www.w3schools.com/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+        <p>Hey! I'm fine. Thanks for asking!</p>
+        <span class="time-left">11:01</span>
+    </div>
+
+    <div class="container">
+        <img src="https://www.w3schools.com/w3images/bandmember.jpg" alt="Avatar">
+        <p>Sweet! So, what do you wanna do today?</p>
+        <span class="time-right">11:02</span>
+    </div>
+
+    <div class="container darker">
+        <img src="https://www.w3schools.com/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+        <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+        <span class="time-left">11:05</span>
+    </div>
+
+    <div class="panel-footer">
+        <div class="input-group">
+            <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+            <span class="input-group-btn">
+                <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+            </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div>
+    <div class="row">
+        <div class="col-md-10">
+            <h2>
+                <img src="/static_page/img/us.png" alt="" width="50"> Cây kỹ năng </h2>
+        </div>
+        <div class="col-md-2">
+            <a href="" class="btn btn-default">
+                <img src="/static_page/img/shop.png" alt="" width="30"> Shop</a>
+        </div>
+    </div>
+
+    <br>
+    <div id="lesson-tree">
+        <ul class="list-group">
+            <li *ngFor="let level of levels">
+                <span class="lesson" *ngFor="let lesson of lessons">
+                    <span  *ngIf="lesson.level == level">
+                        <a [routerLink]="['../lesson', lesson.id ]" *ngIf="lesson.image">
+                            <img [src]="'data:' + lesson.imageContentType + ';base64,' + lesson.image" width="100px" alt="lesson image" />
+                            <p>{{lesson.title}}</p>
+                        </a>
+                    </span>
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>

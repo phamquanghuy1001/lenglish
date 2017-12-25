@@ -1,0 +1,118 @@
+
+#wrapper {
+	background-color: #E9E9E9;
+	padding-top: 90px;
+	width: 100%;
+    min-height: 720px;
+}
+
+#wrapper .well {
+	background-color: #FFFFFF;
+	margin-bottom: 30px;
+}
+
+
+/*-------------------header-------------------------*/
+
+#navbar-top {
+	background-color: #26A8E6;
+}
+
+#navbar-top a {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	font-size: 16px;
+	font-weight: bold;	
+}
+
+/*navbar brand*/
+#navbar-top a.navbar-brand {
+	line-height: 30px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #FFFFFF;
+
+}
+
+/*navbar left*/
+#navbar-top .navbar-left a{
+	margin-right: 5px;
+	color: #FFFFFF;
+}
+#navbar-top .navbar-left li.active a {
+	border-radius: 20px 20px;
+	background-color: #1493D1
+}
+
+
+#navbar-top .navbar-left a:hover {
+	border-radius: 20px 20px;
+	background-color: #1493D1
+}
+
+
+/*navbar right*/
+
+#navbar-top .navbar-right a.avatar {
+	padding-left: 0px;
+	padding-right: 0px;
+	margin: 0;
+}
+
+#navbar-top .navbar-right>li>a {
+	color: #FFFFFF;
+}
+#navbar-top .navbar-right .open>a {
+	background-color: #26A8E6;
+}
+
+#navbar-top .navbar-right .dropdown-menu {
+	top: 60px;
+	border-radius: 10px 10px;
+}
+
+#navbar-top .navbar-right .dropdown-menu >li>a {
+	margin: 0px;
+	font-weight: normal;
+}
+
+#navbar-top .navbar-right .dropdown-menu >li>a:hover {
+	background-color: #1493D1;
+}
+
+
+
+/*---------------------end header--------------------*/
+
+
+/*----------------------section------------------------*/
+
+#lesson-tree ul {
+	list-style: none;
+}
+
+
+#lesson-tree li {
+	text-align: center;
+	margin: 30px auto;
+
+}
+
+#lesson-tree li>span {
+	width: 200px;
+	display: inline-block;
+	text-align: center;
+
+}
+
+#lesson-tree li a {
+	font-weight: bold;
+
+}
+
+
+/*----------------------end section------------------------*/

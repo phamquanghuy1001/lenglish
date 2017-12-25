@@ -1,0 +1,76 @@
+<div>
+    <h2>
+        <span jhiTranslate="lenglishApp.post.home.title">Posts</span>
+        <button class="btn btn-primary float-right jh-create-entity create-post" [routerLink]="['/', { outlets: { popup: ['post-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="lenglishApp.post.home.createLabel">
+            Create new Post
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="posts">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="title"><span jhiTranslate="lenglishApp.post.title">Title</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="content"><span jhiTranslate="lenglishApp.post.content">Content</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="createDate"><span jhiTranslate="lenglishApp.post.createDate">Create Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lastModifier"><span jhiTranslate="lenglishApp.post.lastModifier">Last Modifier</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="activated"><span jhiTranslate="lenglishApp.post.activated">Activated</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="userLogin"><span jhiTranslate="lenglishApp.post.user">User</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let post of posts ;trackBy: trackId">
+                <td><a [routerLink]="['../post', post.id ]">{{post.id}}</a></td>
+                <td>{{post.title}}</td>
+                <td>{{post.content}}</td>
+                <td>{{post.createDate | date:'hh:mm, dd/MM/yyyy'}}</td>
+                <td>{{post.lastModifier | date:'hh:mm, dd/MM/yyyy'}}</td>
+                <td>{{post.activated}}</td>
+                <td>
+                    {{post.userLogin}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../post', post.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'post/'+ post.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'post/'+ post.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="posts && posts.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

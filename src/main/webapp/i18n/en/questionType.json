@@ -1,0 +1,11 @@
+{
+    "lenglishApp": {
+        "QuestionType" : {
+            "null": "",
+            "TRANSLATION": "TRANSLATION",
+            "LISTENING": "LISTENING",
+            "SELECTION": "SELECTION",
+            "SPEECH": "SPEECH"
+        }
+    }
+}

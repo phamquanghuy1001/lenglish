@@ -1,0 +1,24 @@
+{
+    "lenglishApp": {
+        "examLog" : {
+            "home": {
+                "title": "Exam Logs",
+                "createLabel": "Thêm mới một Exam Log",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Exam Log"
+            },
+            "created": "Một Exam Log mới được tạo với định danh {{ param }}",
+            "updated": "Một Exam Log cập nhật với định danh {{ param }}",
+            "deleted": "Một Exam Log đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Exam Log {{ id }}?"
+            },
+            "detail": {
+                "title": "Exam Log"
+            },
+            "createDate": "Create Date",
+            "complete": "Complete",
+            "user": "User",
+            "exam": "Exam"
+        }
+    }
+}

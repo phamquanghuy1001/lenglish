@@ -1,0 +1,154 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myLessonLogLabel" jhiTranslate="lenglishApp.lessonLog.home.createOrEditLabel">Create or edit a Lesson Log</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!lessonLog.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="lessonLog.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.lessonLog.complete" for="field_complete">Complete</label>
+            <input type="number" class="form-control" name="complete" id="field_complete"
+                [(ngModel)]="lessonLog.complete" required min="0" max="5" />
+            <div [hidden]="!(editForm.controls.complete?.dirty && editForm.controls.complete?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.complete?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.complete?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.complete?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 5 }">
+                    This field cannot be more than 5.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.complete?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.lessonLog.translation" for="field_translation">Translation</label>
+            <input type="number" class="form-control" name="translation" id="field_translation"
+                [(ngModel)]="lessonLog.translation" required min="0" max="5" />
+            <div [hidden]="!(editForm.controls.translation?.dirty && editForm.controls.translation?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.translation?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.translation?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.translation?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 5 }">
+                    This field cannot be more than 5.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.translation?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.lessonLog.listening" for="field_listening">Listening</label>
+            <input type="number" class="form-control" name="listening" id="field_listening"
+                [(ngModel)]="lessonLog.listening" required min="0" max="5" />
+            <div [hidden]="!(editForm.controls.listening?.dirty && editForm.controls.listening?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.listening?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.listening?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.listening?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 5 }">
+                    This field cannot be more than 5.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.listening?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.lessonLog.selection" for="field_selection">Selection</label>
+            <input type="number" class="form-control" name="selection" id="field_selection"
+                [(ngModel)]="lessonLog.selection" required min="0" max="5" />
+            <div [hidden]="!(editForm.controls.selection?.dirty && editForm.controls.selection?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.selection?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.selection?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.selection?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 5 }">
+                    This field cannot be more than 5.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.selection?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.lessonLog.speech" for="field_speech">Speech</label>
+            <input type="number" class="form-control" name="speech" id="field_speech"
+                [(ngModel)]="lessonLog.speech" required min="0" max="5" />
+            <div [hidden]="!(editForm.controls.speech?.dirty && editForm.controls.speech?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.speech?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.speech?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.speech?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 5 }">
+                    This field cannot be more than 5.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.speech?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.lessonLog.user" for="field_user">User</label>
+            <select class="form-control" id="field_user" name="user" [(ngModel)]="lessonLog.userId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.lessonLog.lesson" for="field_lesson">Lesson</label>
+            <select class="form-control" id="field_lesson" name="lesson" [(ngModel)]="lessonLog.lessonId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="lessonOption.id" *ngFor="let lessonOption of lessons; trackBy: trackLessonById">{{lessonOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

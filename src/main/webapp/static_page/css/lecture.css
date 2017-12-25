@@ -1,0 +1,33 @@
+.content h2 {
+	text-align: center;
+}
+
+.thumbnail {
+	
+	text-align: center;
+}
+
+
+.thumbnail-img {
+	width: 100%;
+	height: 200px;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+
+.thumbnail .checkbox{
+	display: inline-block;
+	margin-right: 10px;
+	font-size: 20px;
+
+}
+
+.check {
+	padding: 50px 0;
+}
+
+.check {
+	text-align: center;
+}

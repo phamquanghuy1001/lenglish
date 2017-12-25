@@ -1,0 +1,39 @@
+
+<div *ngIf="examLog">
+    <h2><span jhiTranslate="lenglishApp.examLog.detail.title">Exam Log</span> {{examLog.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="lenglishApp.examLog.createDate">Create Date</span></dt>
+        <dd>
+            <span>{{examLog.createDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.examLog.complete">Complete</span></dt>
+        <dd>
+            <span>{{examLog.complete}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.examLog.user">User</span></dt>
+        <dd>
+            {{examLog.userId}}
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.examLog.exam">Exam</span></dt>
+        <dd>
+            <div *ngIf="examLog.examId">
+                <a [routerLink]="['/exam', examLog.examId]">{{examLog.examId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'exam-log/'+ examLog.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

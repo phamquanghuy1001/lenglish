@@ -1,0 +1,38 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="lessonLogs">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="lenglishApp.lessonLog.createDate">Create Date</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="lenglishApp.lessonLog.complete">Complete</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="lenglishApp.lessonLog.translation">Translation</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="lenglishApp.lessonLog.listening">Listening</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="lenglishApp.lessonLog.selection">Selection</span> <span class="fa fa-sort"></span></th>
+            <th><span jhiTranslate="lenglishApp.lessonLog.speech">Speech</span> <span class="fa fa-sort"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let lessonLog of lessonLogs ;trackBy: trackId">
+                <td><a [routerLink]="['../lesson-log', lessonLog.id ]">{{lessonLog.id}}</a></td>
+                <td>{{lessonLog.createDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{lessonLog.complete}}</td>
+                <td>{{lessonLog.translation}}</td>
+                <td>{{lessonLog.listening}}</td>
+                <td>{{lessonLog.selection}}</td>
+                <td>{{lessonLog.speech}}</td>
+            </tbody>
+        </table>
+    </div>
+    <div id="content">
+        <div style="display: block;">
+            <canvas baseChart height="100px" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+        </div>
+    </div>
+</div>

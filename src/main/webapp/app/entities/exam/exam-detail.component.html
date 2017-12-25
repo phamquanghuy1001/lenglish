@@ -1,0 +1,46 @@
+
+<div *ngIf="exam">
+    <h2><span jhiTranslate="lenglishApp.exam.detail.title">Exam</span> {{exam.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="lenglishApp.exam.createDate">Create Date</span></dt>
+        <dd>
+            <span>{{exam.createDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.exam.image">Image</span></dt>
+        <dd>
+            <div *ngIf="exam.image">
+                <a (click)="openFile(exam.imageContentType, exam.image)">
+                    <img [src]="'data:' + exam.imageContentType + ';base64,' + exam.image" style="max-width: 100%;" alt="exam image"/>
+                </a>
+                {{exam.imageContentType}}, {{byteSize(exam.image)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.exam.title">Title</span></dt>
+        <dd>
+            <span>{{exam.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.exam.content">Content</span></dt>
+        <dd>
+            <span>{{exam.content}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.exam.point">Point</span></dt>
+        <dd>
+            <span>{{exam.point}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'exam/'+ exam.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

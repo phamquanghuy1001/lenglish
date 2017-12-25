@@ -1,0 +1,29 @@
+
+<div *ngIf="config">
+    <h2><span jhiTranslate="lenglishApp.config.detail.title">Config</span> {{config.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="lenglishApp.config.key">Key</span></dt>
+        <dd>
+            <span>{{config.key}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.config.value">Value</span></dt>
+        <dd>
+            <span>{{config.value}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'config/'+ config.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

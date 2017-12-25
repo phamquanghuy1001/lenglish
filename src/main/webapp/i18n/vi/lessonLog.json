@@ -1,0 +1,28 @@
+{
+    "lenglishApp": {
+        "lessonLog" : {
+            "home": {
+                "title": "Lesson Logs",
+                "createLabel": "Thêm mới một Lesson Log",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Lesson Log"
+            },
+            "created": "Một Lesson Log mới được tạo với định danh {{ param }}",
+            "updated": "Một Lesson Log cập nhật với định danh {{ param }}",
+            "deleted": "Một Lesson Log đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Lesson Log {{ id }}?"
+            },
+            "detail": {
+                "title": "Lesson Log"
+            },
+            "createDate": "Create Date",
+            "complete": "Complete",
+            "translation": "Translation",
+            "listening": "Listening",
+            "selection": "Selection",
+            "speech": "Speech",
+            "user": "User",
+            "lesson": "Lesson"
+        }
+    }
+}

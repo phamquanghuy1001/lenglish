@@ -1,0 +1,56 @@
+
+<div *ngIf="customerUser">
+    <h2><span jhiTranslate="lenglishApp.customerUser.detail.title">Customer User</span> {{customerUser.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="lenglishApp.customerUser.icon">Icon</span></dt>
+        <dd>
+            <div *ngIf="customerUser.icon">
+                <a (click)="openFile(customerUser.iconContentType, customerUser.icon)">
+                    <img [src]="'data:' + customerUser.iconContentType + ';base64,' + customerUser.icon" style="max-width: 100%;" alt="customerUser image"/>
+                </a>
+                {{customerUser.iconContentType}}, {{byteSize(customerUser.icon)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.customerUser.point">Point</span></dt>
+        <dd>
+            <span>{{customerUser.point}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.customerUser.level">Level</span></dt>
+        <dd>
+            <span>{{customerUser.level}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.customerUser.todayPoint">Today Point</span></dt>
+        <dd>
+            <span>{{customerUser.todayPoint}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.customerUser.dateGoal">Date Goal</span></dt>
+        <dd>
+            <span>{{customerUser.dateGoal}}</span>
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.customerUser.user">User</span></dt>
+        <dd>
+            {{customerUser.userId}}
+        </dd>
+        <dt><span jhiTranslate="lenglishApp.customerUser.room">Room</span></dt>
+        <dd>
+            <div *ngIf="customerUser.roomId">
+                <a [routerLink]="['/room', customerUser.roomId]">{{customerUser.roomId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'customer-user/'+ customerUser.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,114 @@
+entity Config {
+    key String required,
+    value String required
+}
+
+entity CustomerUser {
+    icon ImageBlob,
+	point Integer required,
+    level Integer required,
+    todayPoint Integer,
+    dateGoal Integer,
+}
+
+entity Post {
+    title String required minlength(20),
+    content String required minlength(20),
+    createDate ZonedDateTime,
+    lastModifier ZonedDateTime,
+    activated Boolean required
+}
+
+entity Comment {
+    createDate ZonedDateTime,
+    content String required minlength(5)
+}
+
+entity Room {
+    createDate ZonedDateTime,
+    level Integer required,
+    activated Boolean required, 
+    title String required minlength(5)
+}
+
+entity Lesson {
+    createDate ZonedDateTime,
+    activated Boolean required,
+    title String required minlength(5),
+    level Integer required,
+    content TextBlob,
+    image ImageBlob required
+}
+
+entity Feedback {
+    createDate ZonedDateTime,
+    content String required minlength(20)
+}
+
+enum QuestionType {
+    TRANSLATION, LISTENING, SELECTION, SPEECH
+}
+
+entity Question {
+    createDate ZonedDateTime,
+    QuestionType QuestionType required,
+    content String required,
+    image ImageBlob,
+    resource AnyBlob    
+}
+
+entity Answer {
+    createDate ZonedDateTime,
+    image ImageBlob,
+    content String,
+    result Boolean required
+}
+
+entity Exam {
+    createDate ZonedDateTime,
+    image ImageBlob,
+    title String,
+    content String,
+    point Integer
+}
+
+entity LessonLog {
+    createDate ZonedDateTime,
+    complete Integer required min(0) max(5),
+    translation Integer required min(0) max(5),
+    listening Integer required min(0) max(5),
+    selection Integer required min(0) max(5),
+    speech Integer required min(0) max(5)
+}
+
+entity ExamLog {
+    createDate ZonedDateTime,
+    complete Integer required min(0) max(5)
+}
+
+relationship OneToOne {
+    CustomerUser{user} to User
+}
+
+relationship ManyToOne {
+    Post{user(login)} to User,
+    Comment{post} to Post{comment},
+    Comment{user(login)} to User,
+    Question{lesson} to Lesson,
+    Answer{question} to Question,
+    Feedback{question} to Question,
+    Feedback{user(login)} to User,
+    CustomerUser{room} to Room,
+    LessonLog{user} to User,
+    LessonLog{lesson} to Lesson,
+    ExamLog{user} to User,
+    ExamLog{exam} to Exam
+}
+
+relationship ManyToMany {
+    Question{test} to Exam{question}
+}
+
+paginate * with pagination
+service * with serviceClass
+dto * with mapstruct

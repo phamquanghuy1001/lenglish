@@ -1,0 +1,96 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myCustomerUserLabel" jhiTranslate="lenglishApp.customerUser.home.createOrEditLabel">Create or edit a Customer User</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!customerUser.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="customerUser.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.customerUser.icon" for="field_icon">Icon</label>
+            <div>
+                <img [src]="'data:' + customerUser.iconContentType + ';base64,' + customerUser.icon" style="max-height: 100px;" *ngIf="customerUser.icon" alt="customerUser image"/>
+                <div *ngIf="customerUser.icon" class="form-text text-danger clearfix">
+                    <span class="pull-left">{{customerUser.iconContentType}}, {{byteSize(customerUser.icon)}}</span>
+                    <button type="button" (click)="clearInputImage('icon', 'iconContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_icon" (change)="setFileData($event, customerUser, 'icon', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+            </div>
+            <input type="hidden" class="form-control" name="icon" id="field_icon"
+                [(ngModel)]="customerUser.icon"  />
+            <input type="hidden" class="form-control" name="iconContentType" id="field_iconContentType"
+                [(ngModel)]="customerUser.iconContentType" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.customerUser.point" for="field_point">Point</label>
+            <input type="number" class="form-control" name="point" id="field_point"
+                [(ngModel)]="customerUser.point" required />
+            <div [hidden]="!(editForm.controls.point?.dirty && editForm.controls.point?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.point?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.point?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.customerUser.level" for="field_level">Level</label>
+            <input type="number" class="form-control" name="level" id="field_level"
+                [(ngModel)]="customerUser.level" required />
+            <div [hidden]="!(editForm.controls.level?.dirty && editForm.controls.level?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.level?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.level?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.customerUser.todayPoint" for="field_todayPoint">Today Point</label>
+            <input type="number" class="form-control" name="todayPoint" id="field_todayPoint"
+                [(ngModel)]="customerUser.todayPoint"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.customerUser.dateGoal" for="field_dateGoal">Date Goal</label>
+            <input type="number" class="form-control" name="dateGoal" id="field_dateGoal"
+                [(ngModel)]="customerUser.dateGoal"  />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.customerUser.user" for="field_user">User</label>
+            <select class="form-control" id="field_user" name="user" [(ngModel)]="customerUser.userId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.customerUser.room" for="field_room">Room</label>
+            <select class="form-control" id="field_room" name="room" [(ngModel)]="customerUser.roomId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="roomOption.id" *ngFor="let roomOption of rooms; trackBy: trackRoomById">{{roomOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

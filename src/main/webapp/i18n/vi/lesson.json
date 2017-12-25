@@ -1,0 +1,26 @@
+{
+    "lenglishApp": {
+        "lesson" : {
+            "home": {
+                "title": "Lessons",
+                "createLabel": "Thêm mới một Lesson",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Lesson"
+            },
+            "created": "Một Lesson mới được tạo với định danh {{ param }}",
+            "updated": "Một Lesson cập nhật với định danh {{ param }}",
+            "deleted": "Một Lesson đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Lesson {{ id }}?"
+            },
+            "detail": {
+                "title": "Lesson"
+            },
+            "createDate": "Create Date",
+            "activated": "Activated",
+            "title": "Title",
+            "level": "Level",
+            "content": "Content",
+            "image": "Image"
+        }
+    }
+}

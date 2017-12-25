@@ -1,0 +1,106 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myQuestionLabel" jhiTranslate="lenglishApp.question.home.createOrEditLabel">Create or edit a Question</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!question.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="question.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.question.createDate" for="field_createDate">Create Date</label>
+            <div class="d-flex">
+                <input id="field_createDate" type="datetime-local" class="form-control" name="createDate" [(ngModel)]="question.createDate"
+                  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.question.questionType" for="field_questionType">Question Type</label>
+            <select class="form-control" name="questionType" [(ngModel)]="question.questionType" id="field_questionType"  required>
+                <option value="TRANSLATION">{{'lenglishApp.QuestionType.TRANSLATION' | translate}}</option>
+                <option value="LISTENING">{{'lenglishApp.QuestionType.LISTENING' | translate}}</option>
+                <option value="SELECTION">{{'lenglishApp.QuestionType.SELECTION' | translate}}</option>
+                <option value="SPEECH">{{'lenglishApp.QuestionType.SPEECH' | translate}}</option>
+            </select>
+            <div [hidden]="!(editForm.controls.questionType?.dirty && editForm.controls.questionType?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.questionType?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.question.content" for="field_content">Content</label>
+            <input type="text" class="form-control" name="content" id="field_content"
+                [(ngModel)]="question.content" required />
+            <div [hidden]="!(editForm.controls.content?.dirty && editForm.controls.content?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.content?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.question.image" for="field_image">Image</label>
+            <div>
+                <img [src]="'data:' + question.imageContentType + ';base64,' + question.image" style="max-height: 100px;" *ngIf="question.image" alt="question image"/>
+                <div *ngIf="question.image" class="form-text text-danger clearfix">
+                    <span class="pull-left">{{question.imageContentType}}, {{byteSize(question.image)}}</span>
+                    <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_image" (change)="setFileData($event, question, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+            </div>
+            <input type="hidden" class="form-control" name="image" id="field_image"
+                [(ngModel)]="question.image"  />
+            <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                [(ngModel)]="question.imageContentType" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.question.resource" for="field_resource">Resource</label>
+            <div>
+                <div *ngIf="question.resource" class="form-text text-danger clearfix">
+                    <a class="pull-left" (click)="openFile(question.resourceContentType, question.resource)" jhiTranslate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{question.resourceContentType}}, {{byteSize(question.resource)}}</span>
+                    <button type="button" (click)="question.resource=null;question.resourceContentType=null;"
+                            class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_resource" (change)="setFileData($event, question, 'resource', false)" jhiTranslate="entity.action.addblob"/>
+            </div>
+            <input type="hidden" class="form-control" name="resource" id="field_resource"
+                [(ngModel)]="question.resource"  />
+            <input type="hidden" class="form-control" name="resourceContentType" id="field_resourceContentType"
+                [(ngModel)]="question.resourceContentType" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.question.lesson" for="field_lesson">Lesson</label>
+            <select class="form-control" id="field_lesson" name="lesson" [(ngModel)]="question.lessonId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="lessonOption.id" *ngFor="let lessonOption of lessons; trackBy: trackLessonById">{{lessonOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="lenglishApp.question.test" for="field_test">Test</label>
+            <select class="form-control" id="field_test" multiple name="test" [(ngModel)]="question.tests">
+                <option [ngValue]="getSelected(question.tests, examOption)" *ngFor="let examOption of exams; trackBy: trackExamById">{{examOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,76 @@
+<div>
+    <h2>
+        <span jhiTranslate="lenglishApp.feedback.home.title">Feedbacks</span>
+        <button class="btn btn-primary float-right jh-create-entity create-feedback" [routerLink]="['/', { outlets: { popup: ['feedback-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="lenglishApp.feedback.home.createLabel">
+            Create new Feedback
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="feedbacks">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="createDate"><span jhiTranslate="lenglishApp.feedback.createDate">Create Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="content"><span jhiTranslate="lenglishApp.feedback.content">Content</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="questionId"><span jhiTranslate="lenglishApp.feedback.question">Question</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="userLogin"><span jhiTranslate="lenglishApp.feedback.user">User</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let feedback of feedbacks ;trackBy: trackId">
+                <td><a [routerLink]="['../feedback', feedback.id ]">{{feedback.id}}</a></td>
+                <td>{{feedback.createDate | date:'medium'}}</td>
+                <td>{{feedback.content}}</td>
+                <td>
+                    <div *ngIf="feedback.questionId">
+                        <a [routerLink]="['../question', feedback.questionId  ]" >{{feedback.questionId}}</a>
+                    </div>
+                </td>
+                <td>
+                    {{feedback.userLogin}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../feedback', feedback.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'feedback/'+ feedback.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'feedback/'+ feedback.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="feedbacks && feedbacks.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

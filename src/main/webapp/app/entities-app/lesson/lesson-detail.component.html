@@ -1,0 +1,33 @@
+<div *ngIf="lesson" id="wrapper">
+    <div class="header">
+        <h2>
+            <span jhiTranslate="lenglishApp.lesson.detail.title">Lesson</span>
+            <span>{{lesson.title}}</span>
+        </h2>
+        <div>Độ mạnh: 1/5</div>
+    </div>
+    <br>
+    <br>
+    <jhi-alert-error></jhi-alert-error>
+    <div class="box">
+        <div>
+            <h3>
+                <!-- react-text: 843 -->Bài học
+                <!-- /react-text -->
+                <span class="success"></span>
+            </h3>
+            <p>
+                <span [innerHTML]="lesson.content"></span>
+            </p>
+            <a data-test="" class="_2wH5q TZE8O _1AthD B1eV7 _1lig4 _3IS_q _2uOd6" [routerLink]="['../../learn', lesson.id ]">Start</a>
+        </div>
+    </div>
+    <!-- <div id="content">
+        <div style="display: block;">
+            <canvas baseChart height="100px" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+        </div>
+    </div> -->
+    <jhi-lesson-log [lessonId]="lesson.id"></jhi-lesson-log>
+</div>
