@@ -19,6 +19,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     room: Room;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
+    message: string;
 
     constructor(
         private eventManager: JhiEventManager,
@@ -33,12 +34,15 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
             this.load(params['id']);
         });
         this.registerChangeInRooms();
-        this.trackerService.subscribeMessage();
+
     }
 
     load(id) {
         this.roomService.find(id).subscribe((room) => {
             this.room = room;
+            this.trackerService.subscribeMessage(this.room.id, function(data) {
+                console.log("DATA", data);
+            });
         });
     }
     previousState() {
@@ -58,6 +62,6 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
-        this.trackerService.sendMessage();
+        this.trackerService.sendMessage( this.message, 1 );
     }
 }

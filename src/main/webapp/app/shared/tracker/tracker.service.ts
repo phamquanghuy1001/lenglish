@@ -13,11 +13,13 @@ import * as Stomp from 'webstomp-client';
 export class JhiTrackerService {
     stompClient = null;
     subscriber = null;
+    subscriberMessage = null;
     connection: Promise<any>;
     connectedPromise: any;
     listener: Observable<any>;
     listenerObserver: Observer<any>;
     alreadyConnectedOnce = false;
+    roomId = 0;
     private subscription: Subscription;
 
     constructor(
@@ -86,18 +88,19 @@ export class JhiTrackerService {
             );
         }
     }
-    subscribeMessage() {
+    subscribeMessage(roomId, callback) {
         this.connection.then(() => {
-            this.subscriber = this.stompClient.subscribe('/topic/public', (data) => {
-                console.log('data', JSON.parse(data.body));
-            });
+            if(roomId != this.roomId){
+                this.subscriberMessage = this.stompClient.subscribe('/topic/' + roomId, callback);
+                this.roomId = roomId;
+            }
         });
     }
-    sendMessage() {
+    sendMessage(message, roomId) {
         if (this.stompClient !== null && this.stompClient.connected) {
             this.stompClient.send(
                 '/chat.sendMessage', // destination
-                JSON.stringify({'content': 'send message'}), // body
+                JSON.stringify({'roomId': roomId ,'message': message}), // body
                 {} // header
             );
         }

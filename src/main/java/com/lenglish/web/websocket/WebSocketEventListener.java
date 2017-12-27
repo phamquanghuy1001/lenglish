@@ -44,7 +44,7 @@ public class WebSocketEventListener {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setType(ChatMessage.MessageType.JOIN);
+        chatMessage.setType(ChatMessage.MessageType.LEAVE);
         chatMessage.setSender(userFromEvent.getUsername());
 
         String destination = headerAccessor.getDestination();
@@ -76,7 +76,7 @@ public class WebSocketEventListener {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setType(ChatMessage.MessageType.JOIN);
+        chatMessage.setType(ChatMessage.MessageType.LEAVE);
         chatMessage.setSender(userFromEvent.getUsername());
 
         String destination = headerAccessor.getDestination();
