@@ -8,6 +8,7 @@ import { AuthServerProvider } from '../auth/auth-jwt.service';
 
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'webstomp-client';
+import { Message } from "./Message.model";
 
 @Injectable()
 export class JhiTrackerService {
@@ -20,6 +21,8 @@ export class JhiTrackerService {
     listenerObserver: Observer<any>;
     alreadyConnectedOnce = false;
     roomId = 0;
+
+    messages: Message[] = [];
     private subscription: Subscription;
 
     constructor(
@@ -90,7 +93,9 @@ export class JhiTrackerService {
     }
     subscribeMessage(roomId, callback) {
         this.connection.then(() => {
-            if(roomId != this.roomId){
+            if(roomId !== this.roomId) {
+                this.messages = [];
+                this.unsubscribeMessage();
                 this.subscriberMessage = this.stompClient.subscribe('/topic/' + roomId, callback);
                 this.roomId = roomId;
             }
@@ -117,6 +122,12 @@ export class JhiTrackerService {
     unsubscribe() {
         if (this.subscriber !== null) {
             this.subscriber.unsubscribe();
+        }
+        this.listener = this.createListener();
+    }
+    unsubscribeMessage() {
+        if (this.subscriberMessage !== null) {
+            this.subscriberMessage.unsubscribe();
         }
         this.listener = this.createListener();
     }
