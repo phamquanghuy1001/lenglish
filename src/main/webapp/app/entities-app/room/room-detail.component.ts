@@ -5,6 +5,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { Room } from './room.model';
 import { RoomService } from './room.service';
+import { JhiTrackerService } from './../../shared/tracker/tracker.service';
 
 @Component({
     selector: 'jhi-room-detail',
@@ -22,7 +23,8 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     constructor(
         private eventManager: JhiEventManager,
         private roomService: RoomService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private trackerService: JhiTrackerService
     ) {
     }
 
@@ -31,6 +33,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
             this.load(params['id']);
         });
         this.registerChangeInRooms();
+        this.trackerService.subscribeMessage();
     }
 
     load(id) {
@@ -52,5 +55,9 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
             'roomListModification',
             (response) => this.load(this.room.id)
         );
+    }
+
+    sendMessage() {
+        this.trackerService.sendMessage();
     }
 }

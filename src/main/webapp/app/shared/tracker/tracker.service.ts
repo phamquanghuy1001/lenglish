@@ -86,6 +86,22 @@ export class JhiTrackerService {
             );
         }
     }
+    subscribeMessage() {
+        this.connection.then(() => {
+            this.subscriber = this.stompClient.subscribe('/topic/public', (data) => {
+                console.log('data', JSON.parse(data.body));
+            });
+        });
+    }
+    sendMessage() {
+        if (this.stompClient !== null && this.stompClient.connected) {
+            this.stompClient.send(
+                '/chat.sendMessage', // destination
+                JSON.stringify({'content': 'send message'}), // body
+                {} // header
+            );
+        }
+    }
 
     subscribe() {
         this.connection.then(() => {
