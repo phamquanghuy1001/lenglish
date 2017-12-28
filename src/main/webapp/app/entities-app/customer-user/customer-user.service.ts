@@ -37,6 +37,13 @@ export class CustomerUserService {
         });
     }
 
+    findByLogin(login: string): Observable<CustomerUser> {
+        return this.http.get(`${this.resourceUrl}/full/${login}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
+        });
+    }
+
     findCurrent(): Observable<CustomerUser> {
         return this.http.get(this.resourceUrlCurrent).map((res: Response) => {
             const jsonResponse = res.json();

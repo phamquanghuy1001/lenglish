@@ -4,22 +4,28 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <div *ngFor="let message of trackerService.messages">
+        <div *ngIf="message.type == 'JOIN'">
+            <span><span class="text-primary ltm-sender">{{message.sender}}</span> join this room</span>
+        </div>
         <div *ngIf="message.type == 'CHAT'">
             <div class="container">
-                <img src="https://www.w3schools.com/w3images/bandmember.jpg" alt="Avatar" [ngClass]="{'right': message.sender == account.login}">
-                <p>{{message.content}}</p>
+                <img [src]="'data:' + message.iconContentType + ';base64,' + message.image" alt="Avatar" [ngClass]="{'right': message.sender == account.login}">
+                <p><span class="text-primary ltm-sender">{{message.sender}}</span>: {{message.content}}</p>
                 <span [ngClass]="{'time-left': message.sender == account.login,
-                'time-right': message.sender !== account.login}">11:00</span>
+                'time-right': message.sender !== account.login}">{{message.time}}</span>
             </div>
+        </div>
+        <div *ngIf="message.type == 'LEAVE'">
+            <span>{{message.sender}} leave this room</span>
         </div>
 
     </div>
 
 
     <!--<div class="container darker">-->
-        <!--<img src="https://www.w3schools.com/w3images/avatar_g2.jpg" alt="Avatar" class="right">-->
-        <!--<p>Hey! I'm fine. Thanks for asking!</p>-->
-        <!--<span class="time-left">11:01</span>-->
+    <!--<img src="https://www.w3schools.com/w3images/avatar_g2.jpg" alt="Avatar" class="right">-->
+    <!--<p>Hey! I'm fine. Thanks for asking!</p>-->
+    <!--<span class="time-left">11:01</span>-->
     <!--</div>-->
 
     <div class="panel-footer">

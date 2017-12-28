@@ -3,6 +3,7 @@ package com.lenglish.service;
 import com.lenglish.domain.CustomerUser;
 import com.lenglish.domain.User;
 import com.lenglish.repository.CustomerUserRepository;
+import com.lenglish.repository.UserRepository;
 import com.lenglish.service.dto.CustomerUserDTO;
 import com.lenglish.service.mapper.CustomerUserMapper;
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 
 /**
@@ -26,9 +29,12 @@ public class CustomerUserService {
 
     private final CustomerUserMapper customerUserMapper;
 
-    public CustomerUserService(CustomerUserRepository customerUserRepository, CustomerUserMapper customerUserMapper) {
+    private final UserRepository userRepository;
+
+    public CustomerUserService(CustomerUserRepository customerUserRepository, CustomerUserMapper customerUserMapper, UserRepository userRepository) {
         this.customerUserRepository = customerUserRepository;
         this.customerUserMapper = customerUserMapper;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -67,6 +73,14 @@ public class CustomerUserService {
         log.debug("Request to get CustomerUser : {}", id);
         CustomerUser customerUser = customerUserRepository.findOne(id);
         return customerUserMapper.toDto(customerUser);
+    }
+
+    @Transactional(readOnly = true)
+    public CustomerUser findFullOne(String login) {
+        log.debug("Request to get CustomerUser : {}", login);
+        Optional<User> user = userRepository.findOneByLogin(login);
+        CustomerUser customerUser = customerUserRepository.findOneByUser(user.get());
+        return customerUser;
     }
 
     /**
