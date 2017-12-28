@@ -8,6 +8,7 @@ import { RoomService } from './room.service';
 import { JhiTrackerService } from './../../shared/tracker/tracker.service';
 import { Message } from './../../shared/tracker/Message.model';
 import {Account, Principal} from '../../shared';
+import { CustomerUser, CustomerUserService } from '../customer-user';
 
 @Component({
     selector: 'jhi-room-detail',
@@ -28,7 +29,8 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager,
         private roomService: RoomService,
         private route: ActivatedRoute,
-        public trackerService: JhiTrackerService
+        public trackerService: JhiTrackerService,
+        private customerUserService: CustomerUserService
     ) {
     }
 
@@ -46,19 +48,30 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.roomService.find(id).subscribe((room) => {
             this.room = room;
-            const that = this;
-            this.trackerService.subscribeMessage(this.room.id, function(data) {
-
-                let message:Message = JSON.parse(data.body);
-                that.trackerService.messages.push(message);
-                console.log("data", data);
-                console.log("body", data.body);
-                console.log(typeof (message));
-                console.log("account", that.account.login);
-
-                console.log("equal", that.account.login == that.trackerService.messages[0].sender);
-            });
+            this.thenLoad();
         });
+    }
+
+    thenLoad() {
+        const that = this;
+        this.trackerService.subscribeMessage(this.room.id, function(data) {
+
+            const message: Message = JSON.parse(data.body);
+            message.time = that.getShortTime();
+            that.customerUserService.findByLogin(message.sender).subscribe((customerUser) => {
+                message.image = customerUser.icon;
+                message.iconContentType = customerUser.iconContentType;
+                that.trackerService.messages.push(message);
+            });
+
+        });
+    }
+    getShortTime() {
+        const d = new Date();
+        const hh = d.getHours() > 10 ? d.getHours() : '0' + d.getHours();
+        const mm = d.getMinutes() > 10 ? d.getMinutes() : '0' + d.getMinutes();
+        const ss = d.getSeconds() > 10 ? d.getSeconds() : '0' + d.getSeconds();
+        return hh + ':' + mm + ':' + ss;
     }
     previousState() {
         window.history.back();
@@ -77,6 +90,6 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
-        this.trackerService.sendMessage( this.message, 1 );
+        this.trackerService.sendMessage( this.message, this.room.id );
     }
 }

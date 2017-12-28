@@ -8,7 +8,7 @@ import { AuthServerProvider } from '../auth/auth-jwt.service';
 
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'webstomp-client';
-import { Message } from "./Message.model";
+import { Message } from './Message.model';
 
 @Injectable()
 export class JhiTrackerService {
@@ -93,7 +93,7 @@ export class JhiTrackerService {
     }
     subscribeMessage(roomId, callback) {
         this.connection.then(() => {
-            if(roomId !== this.roomId) {
+            if (roomId !== this.roomId) {
                 this.messages = [];
                 this.unsubscribeMessage();
                 this.subscriberMessage = this.stompClient.subscribe('/topic/' + roomId, callback);
@@ -105,7 +105,7 @@ export class JhiTrackerService {
         if (this.stompClient !== null && this.stompClient.connected) {
             this.stompClient.send(
                 '/chat.sendMessage', // destination
-                JSON.stringify({'roomId': roomId ,'message': message}), // body
+                JSON.stringify({'roomId': roomId, 'message': message}), // body
                 {} // header
             );
         }
