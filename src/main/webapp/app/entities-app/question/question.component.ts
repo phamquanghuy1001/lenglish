@@ -8,6 +8,7 @@ import { QuestionService } from './question.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 
 import { Answer, AnswerService } from '../answer';
+import { QuestionType } from '../../entities-app/question/index';
 
 @Component({
     selector: 'jhi-question',
@@ -34,8 +35,11 @@ export class QuestionComponent implements OnInit, OnDestroy {
     reverse: any;
     indexQuestion: number;
     content: string;
-    result: string;
+    result: String = 'init';
+    answer: Answer;
     answers: Answer[];
+    submitAnswers: Answer[];
+    count: number;
 
     constructor(
         private questionService: QuestionService,
@@ -68,6 +72,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
         this.loadByLesson(this.lessonId);
     }
     ngOnInit() {
+        this.count = 0;
         this.activatedRoute.params.subscribe((params) => {
             this.lessonId = params['id'];
         });
@@ -111,6 +116,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.questions = data;
+        this.submitAnswers = new Array(this.questions.length);
         this.indexQuestion = 0;
         this.loadAnswers(this.questions[this.indexQuestion].id);
     }
@@ -121,7 +127,6 @@ export class QuestionComponent implements OnInit, OnDestroy {
     // new
     onPlay() {
         console.log('data:' + this.questions[this.indexQuestion].resourceContentType + ';base64,' + this.questions[this.indexQuestion].resource);
-        // const resource = 'https://translate.google.com/translate_tts?ie=UTF-8&q=hello%20word!&tl=en&total=1&idx=0&textlen=11&tk=620811.988028&client=t&prev=input&ttsspeed=1.5';
         const resource = 'data:' + this.questions[this.indexQuestion].resourceContentType + ';base64,' + this.questions[this.indexQuestion].resource;
         const audio = new Audio(resource);
         audio.play();
@@ -129,29 +134,71 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
     onCheck() {
         console.log('---------index of question: ' + this.indexQuestion);
-        console.log(this.questions[this.indexQuestion].content + ' : ' + this.content);
-        if (this.questions[this.indexQuestion].content === this.content) {
-            this.result = 'success';
-        } else {
+        const question: Question = this.questions[this.indexQuestion];
+        const currentAnswer = new Answer();
+        if (question.questionType + '' === 'SELECTION') {
+            currentAnswer.questionId = question.id;
+            currentAnswer.id = this.answer.id;
+            if (this.answer.result === true) {
+                this.result = 'success';
+                currentAnswer.result = true;
+            } else {
+                this.result = 'fail';
+                currentAnswer.result = false;
+            }
+        } else if (question.questionType + '' === 'LISTENING') {
+            currentAnswer.questionId = question.id;
+            currentAnswer.content = this.content;
+            if (question.content.toLowerCase() === this.content.toLowerCase()) {
+                this.result = 'success';
+                currentAnswer.result = true;
+            } else {
+                this.result = 'fail';
+                currentAnswer.result = false;
+            }
+        } else if (question.questionType + '' === 'TRANSLATION') {
+            currentAnswer.questionId = question.id;
+            currentAnswer.content = this.content;
             this.result = 'fail';
+            currentAnswer.result = false;
+            for (const ans of this.answers) {
+                if (ans.content.toLowerCase() === this.content.toLowerCase()) {
+                    this.result = 'success';
+                    currentAnswer.result = true;
+                }
+            }
         }
+        this.submitAnswers[this.indexQuestion] = currentAnswer;
     }
 
     onNext() {
-        console.log('----------index of question: ' + this.indexQuestion);
         if (this.indexQuestion < this.questions.length - 1) {
             this.indexQuestion++;
             this.loadAnswers(this.questions[this.indexQuestion].id);
+            this.result = 'init';
         } else {
+            for (const ans of this.submitAnswers) {
+                if (ans.result === true) {
+                    this.count++;
+                }
+            }
             this.result = 'finish';
         }
+        this.answer = new Answer();
     }
 
     loadAnswers(questionId: number) {
         // load answer
         this.answerService.queryByQuestion(questionId).subscribe((res: ResponseWrapper) => {
             this.answers = res.json;
-            console.log(this.answers);
         });
+    }
+
+    onChooseAnswer(answer: Answer) {
+        this.answer = answer;
+    }
+
+    onSubmitAnswers() {
+        console.log(this.submitAnswers);
     }
 }

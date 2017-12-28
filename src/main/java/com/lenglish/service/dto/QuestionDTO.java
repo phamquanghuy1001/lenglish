@@ -1,6 +1,5 @@
 package com.lenglish.service.dto;
 
-
 import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -15,138 +14,138 @@ import com.lenglish.domain.enumeration.QuestionType;
  */
 public class QuestionDTO implements Serializable {
 
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4932790144450038040L;
 
-    private ZonedDateTime createDate;
+	private Long id;
 
-    @NotNull
-    private QuestionType questionType;
+	private ZonedDateTime createDate;
 
-    @NotNull
-    private String content;
+	@NotNull
+	private QuestionType questionType;
 
-    @Lob
-    private byte[] image;
-    private String imageContentType;
+	@NotNull
+	private String content;
 
-    @Lob
-    private byte[] resource;
-    private String resourceContentType;
+	@Lob
+	private byte[] image;
+	private String imageContentType;
 
-    private Long lessonId;
+	@Lob
+	private byte[] resource;
+	private String resourceContentType;
 
-    private Set<ExamDTO> tests = new HashSet<>();
+	private Long lessonId;
 
-    public Long getId() {
-        return id;
-    }
+	private Set<ExamDTO> tests = new HashSet<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public ZonedDateTime getCreateDate() {
-        return createDate;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setCreateDate(ZonedDateTime createDate) {
-        this.createDate = createDate;
-    }
+	public ZonedDateTime getCreateDate() {
+		return createDate;
+	}
 
-    public QuestionType getQuestionType() {
-        return questionType;
-    }
+	public void setCreateDate(ZonedDateTime createDate) {
+		this.createDate = createDate;
+	}
 
-    public void setQuestionType(QuestionType questionType) {
-        this.questionType = questionType;
-    }
+	public QuestionType getQuestionType() {
+		return questionType;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public void setQuestionType(QuestionType questionType) {
+		this.questionType = questionType;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public byte[] getImage() {
-        return image;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+	public byte[] getImage() {
+		return image;
+	}
 
-    public String getImageContentType() {
-        return imageContentType;
-    }
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
-    public void setImageContentType(String imageContentType) {
-        this.imageContentType = imageContentType;
-    }
+	public String getImageContentType() {
+		return imageContentType;
+	}
 
-    public byte[] getResource() {
-        return resource;
-    }
+	public void setImageContentType(String imageContentType) {
+		this.imageContentType = imageContentType;
+	}
 
-    public void setResource(byte[] resource) {
-        this.resource = resource;
-    }
+	public byte[] getResource() {
+		return resource;
+	}
 
-    public String getResourceContentType() {
-        return resourceContentType;
-    }
+	public void setResource(byte[] resource) {
+		this.resource = resource;
+	}
 
-    public void setResourceContentType(String resourceContentType) {
-        this.resourceContentType = resourceContentType;
-    }
+	public String getResourceContentType() {
+		return resourceContentType;
+	}
 
-    public Long getLessonId() {
-        return lessonId;
-    }
+	public void setResourceContentType(String resourceContentType) {
+		this.resourceContentType = resourceContentType;
+	}
 
-    public void setLessonId(Long lessonId) {
-        this.lessonId = lessonId;
-    }
+	public Long getLessonId() {
+		return lessonId;
+	}
 
-    public Set<ExamDTO> getTests() {
-        return tests;
-    }
+	public void setLessonId(Long lessonId) {
+		this.lessonId = lessonId;
+	}
 
-    public void setTests(Set<ExamDTO> exams) {
-        this.tests = exams;
-    }
+	public Set<ExamDTO> getTests() {
+		return tests;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	public void setTests(Set<ExamDTO> exams) {
+		this.tests = exams;
+	}
 
-        QuestionDTO questionDTO = (QuestionDTO) o;
-        if(questionDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), questionDTO.getId());
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+		QuestionDTO questionDTO = (QuestionDTO) o;
+		if (questionDTO.getId() == null || getId() == null) {
+			return false;
+		}
+		return Objects.equals(getId(), questionDTO.getId());
+	}
 
-    @Override
-    public String toString() {
-        return "QuestionDTO{" +
-            "id=" + getId() +
-            ", createDate='" + getCreateDate() + "'" +
-            ", questionType='" + getQuestionType() + "'" +
-            ", content='" + getContent() + "'" +
-            ", image='" + getImage() + "'" +
-            ", resource='" + getResource() + "'" +
-            "}";
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(getId());
+	}
+
+	@Override
+	public String toString() {
+		return "QuestionDTO{" + "id=" + getId() + ", createDate='" + getCreateDate() + "'" + ", questionType='"
+				+ getQuestionType() + "'" + ", content='" + getContent() + "'" + ", image='" + getImage() + "'"
+				+ ", resource='" + getResource() + "'" + "}";
+	}
 }

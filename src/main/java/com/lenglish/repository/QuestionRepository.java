@@ -17,11 +17,11 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    @Query("select distinct question from Question question left join fetch question.tests")
-    List<Question> findAllWithEagerRelationships();
+	@Query("select distinct question from Question question left join fetch question.tests")
+	List<Question> findAllWithEagerRelationships();
 
-    @Query("select question from Question question left join fetch question.tests where question.id =:id")
-    Question findOneWithEagerRelationships(@Param("id") Long id);
+	@Query("select question from Question question left join fetch question.tests where question.id =:id")
+	Question findOneWithEagerRelationships(@Param("id") Long id);
 
 	Page<Question> findAllByLesson(Pageable pageable, Lesson lesson);
 

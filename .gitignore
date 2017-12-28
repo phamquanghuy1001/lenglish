@@ -140,3 +140,8 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+
+######################
+# config
+######################
+/src/main/resources/config

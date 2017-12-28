@@ -115,10 +115,14 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        userRepository.save(newUser);
         CustomerUser customerUser = new CustomerUser();
         customerUser.setUser(newUser);
+        customerUser.setPoint(0);
+        customerUser.setLevel(1);
+        customerUser.setTodayPoint(0);
+        customerUser.setDateGoal(0);
         customerUserRepository.save(customerUser);
-        userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }
@@ -148,8 +152,8 @@ public class UserService {
         user.setActivated(true);
         CustomerUser customerUser = new CustomerUser();
         customerUser.setUser(user);
-        customerUserRepository.save(customerUser);
         userRepository.save(user);
+//        customerUserRepository.save(customerUser);
         log.debug("Created Information for User: {}", user);
         return user;
     }

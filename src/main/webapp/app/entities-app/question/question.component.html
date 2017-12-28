@@ -1,6 +1,6 @@
 <div *ngIf="questions && result!='finish'" id="wrapper">
     <br>
-    <h3 class="text-center text-bold">5/12</h3 class="text-center">
+    <h3 class="text-center text-bold">{{indexQuestion+1}}/{{questions.length}}</h3 class="text-center">
     <br>
     <br>
     <div class=" container">
@@ -16,7 +16,7 @@
                         <img [src]="'data:' + answer.imageContentType + ';base64,' + answer.image" alt="answer image" class="img-thumbnail mx-auto"
                         />
                         <div>
-                            <input type="radio" name="choose" value="1" class="">
+                            <input type="radio" name="choose" value="1" class="" (click)="onChooseAnswer(answer);">
                             <span>{{answer.content}}</span>
                         </div>
                     </li>
@@ -37,7 +37,7 @@
                         {{questions[indexQuestion].content}}
                     </div>
                     <div class="">
-                        <textarea class="form-control" rows="5" id="comment" placeholder="Nhap bang tieng viet"></textarea>
+                        <textarea class="form-control" rows="5" id="comment" placeholder="Nhap bang tieng viet" [(ngModel)]="content"></textarea>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
     <br>
     <br>
 
-    <div class="footer" *ngIf="!result">
+    <div class="footer" *ngIf="result=='init'">
         <div class="container">
             <div class="row">
                 <div class="col-md-2">
@@ -112,8 +112,8 @@
     <br>
     <br>
     <br>
-    <h2 class="text-center">Hoan thanh 5/5</h2>
-    <a class="text-center" [routerLink]="['/app']">Tro ve</a>
+    <h2 class="text-center">Hoan thanh {{count}}/{{questions.length}}</h2>
+    <a class="text-center" [routerLink]="['/app']" (click)="onSubmitAnswers()">Submit ket qua</a>
     <br>
     <br>
     <br>
