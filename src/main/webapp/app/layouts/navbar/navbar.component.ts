@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
+import { Subscription } from 'rxjs/Rx';
+import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { ProfileService } from '../profiles/profile.service';
+import { CustomerUserService, CustomerUser } from '../../entities-app/customer-user';
 import { JhiLanguageHelper, Principal, LoginModalService, LoginService, Account } from '../../shared';
 
 import { VERSION } from '../../app.constants';
@@ -24,15 +27,19 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    eventSubscriber: Subscription;
+    customerUser: CustomerUser;
 
     constructor(
         private loginService: LoginService,
+        public customerUserService: CustomerUserService,
         private languageService: JhiLanguageService,
         private languageHelper: JhiLanguageHelper,
         private principal: Principal,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
-        private router: Router
+        private router: Router,
+        private eventManager: JhiEventManager
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -46,15 +53,23 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
-        this.router.events.subscribe((event) => {
+        this.eventSubscriber = this.eventManager.subscribe('getUser',
+            (response) => {
+                if (this.principal.isAuthenticated()) {
+                    this.principal.identity().then((account) => {
+                        this.account = account;
+                    });
+                }
+                this.customerUserService.updateUser();
+            });
 
-            if (this.principal.isAuthenticated()) {
-                this.principal.identity().then((account) => {
-                    this.account = account;
-                });
-            }
-
-        });
+        if (this.isAuthenticated()) {
+            this.customerUserService.findCurrent().subscribe(
+                (customerUser) => {
+                    this.customerUser = customerUser;
+                }
+            );
+        }
     }
 
     changeLanguage(languageKey: string) {

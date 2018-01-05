@@ -30,7 +30,8 @@ import {
     UserResolvePagingParams,
     UserResolve,
     UserModalService,
-    DashboardComponent
+    DashboardComponent,
+    DashboardService
 } from './';
 
 @NgModule({
@@ -72,7 +73,7 @@ import {
         JhiTrackerService,
         UserResolvePagingParams,
         UserResolve,
-        UserModalService
+        UserModalService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

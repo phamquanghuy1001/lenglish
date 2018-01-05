@@ -22,6 +22,8 @@ public class ExamLogDTO implements Serializable {
     @Max(value = 5)
     private Integer complete;
 
+    private Integer point;
+
     private Long userId;
 
     private Long examId;
@@ -48,6 +50,14 @@ public class ExamLogDTO implements Serializable {
 
     public void setComplete(Integer complete) {
         this.complete = complete;
+    }
+
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
     }
 
     public Long getUserId() {
@@ -93,6 +103,7 @@ public class ExamLogDTO implements Serializable {
             "id=" + getId() +
             ", createDate='" + getCreateDate() + "'" +
             ", complete='" + getComplete() + "'" +
+            ", point='" + getPoint() + "'" +
             "}";
     }
 }

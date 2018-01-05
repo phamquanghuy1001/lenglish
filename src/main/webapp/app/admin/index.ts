@@ -31,5 +31,6 @@ export * from './user-management/user-modal.service';
 // new
 export * from './dashboard/dashboard.component';
 export * from './dashboard/dashboard.route';
+export * from './dashboard/dashboard.service';
 // root admin
 export * from './admin.route';

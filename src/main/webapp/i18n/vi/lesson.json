@@ -7,7 +7,7 @@
                 "createOrEditLabel": "Thêm mới hoặc cập nhật Lesson"
             },
             "created": "Một Lesson mới được tạo với định danh {{ param }}",
-            "updated": "Một Lesson cập nhật với định danh {{ param }}",
+            "updated": "Đã cập nhật",
             "deleted": "Một Lesson đã xóa với định danh {{ param }}",
             "delete": {
                 "question": "Bạn có chắc là muốn xóa Lesson {{ id }}?"
@@ -20,7 +20,8 @@
             "title": "Title",
             "level": "Level",
             "content": "Content",
-            "image": "Image"
+            "image": "Image",
+            "errorLevel": "Chua du level"
         }
     }
 }

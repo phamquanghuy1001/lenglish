@@ -6,6 +6,8 @@ import com.lenglish.web.rest.errors.BadRequestAlertException;
 import com.lenglish.web.rest.util.HeaderUtil;
 import com.lenglish.web.rest.util.PaginationUtil;
 import com.lenglish.service.dto.ExamDTO;
+import com.lenglish.service.util.DateTimeUtil;
+
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -54,6 +56,7 @@ public class ExamResource {
         if (examDTO.getId() != null) {
             throw new BadRequestAlertException("A new exam cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        examDTO.setCreateDate(DateTimeUtil.now());
         ExamDTO result = examService.save(examDTO);
         return ResponseEntity.created(new URI("/api/exams/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

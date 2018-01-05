@@ -168,20 +168,30 @@ public class AnswerResource {
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/answers_by_question/" + id);
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}
-	
-	@PostMapping("/submit_answers")
+
+	@PostMapping("/submit_answers/{id}")
 	@Timed
-	public ResponseEntity<ResultLessonDTO> submitAnswer(@Valid @RequestBody List<AnswerDTO> answerDTOs) {
+	public ResponseEntity<ResultLessonDTO> submitAnswer(@Valid @RequestBody List<AnswerDTO> answerDTOs,
+			@PathVariable Long id) {
 		log.debug("Submit Answers of Lesson");
-		ResultLessonDTO resultLessonDTO = answerService.submitAnswer(answerDTOs);
-		return new ResponseEntity<>(resultLessonDTO , HttpStatus.OK);
+		ResultLessonDTO resultLessonDTO = answerService.submitAnswer(answerDTOs, id);
+		return new ResponseEntity<>(resultLessonDTO, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/check_answers")
 	@Timed
 	public ResponseEntity<ResultLessonDTO> checkAnswer(@Valid @RequestBody AnswerDTO answerDTOs) {
 		log.debug("Check Answer");
-		return new ResponseEntity<>(new ResultLessonDTO(0, 0) , HttpStatus.OK);
+		return new ResponseEntity<>(new ResultLessonDTO(0, 0), HttpStatus.OK);
 	}
 	
+	@PostMapping("/submit_answers_by_exam/{id}")
+	@Timed
+	public ResponseEntity<ResultLessonDTO> submitAnswerExam(@Valid @RequestBody List<AnswerDTO> answerDTOs,
+			@PathVariable Long id) {
+		log.debug("Submit Answers of Lesson");
+		ResultLessonDTO resultLessonDTO = answerService.submitAnswerExam(answerDTOs, id);
+		return new ResponseEntity<>(resultLessonDTO, HttpStatus.OK);
+	}
+
 }

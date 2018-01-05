@@ -29,6 +29,10 @@
             ],
             "fieldValidateRulesMin": 0,
             "fieldValidateRulesMax": 5
+        },
+        {
+            "fieldName": "point",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20171222181103",

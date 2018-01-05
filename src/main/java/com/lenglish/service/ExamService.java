@@ -78,4 +78,8 @@ public class ExamService {
         log.debug("Request to delete Exam : {}", id);
         examRepository.delete(id);
     }
+
+	public long countExam() {
+		return examRepository.count();
+	}
 }

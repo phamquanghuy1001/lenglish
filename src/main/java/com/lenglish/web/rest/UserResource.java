@@ -82,7 +82,7 @@ public class UserResource {
     private final UserService userService;
 
     public UserResource(UserRepository userRepository, MailService mailService,
-            UserService userService, CustomerUserService customerUserService) {
+            UserService userService) {
 
         this.userRepository = userRepository;
         this.mailService = mailService;

@@ -63,7 +63,7 @@ currentAccount: any;
         }
     }
     transition() {
-        this.router.navigate(['/lesson'], {queryParams:
+        this.router.navigate(['/admin/lesson'], {queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,
@@ -75,7 +75,7 @@ currentAccount: any;
 
     clear() {
         this.page = 0;
-        this.router.navigate(['/lesson', {
+        this.router.navigate(['/admin/lesson', {
             page: this.page,
             sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
         }]);

@@ -7,6 +7,7 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CookieModule } from 'ngx-cookie';
 import { ChartsModule } from 'ng2-charts';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import { ChartsModule } from 'ng2-charts';
         CookieModule.forRoot()
     ],
     exports: [
+        CKEditorModule,
         ChartsModule,
         FormsModule,
         HttpModule,

@@ -58,10 +58,10 @@ public class Question implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "question_test",
+    @JoinTable(name = "question_exam",
                joinColumns = @JoinColumn(name="questions_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="tests_id", referencedColumnName="id"))
-    private Set<Exam> tests = new HashSet<>();
+               inverseJoinColumns = @JoinColumn(name="exams_id", referencedColumnName="id"))
+    private Set<Exam> exams = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -176,29 +176,29 @@ public class Question implements Serializable {
         this.lesson = lesson;
     }
 
-    public Set<Exam> getTests() {
-        return tests;
+    public Set<Exam> getExams() {
+        return exams;
     }
 
-    public Question tests(Set<Exam> exams) {
-        this.tests = exams;
+    public Question exams(Set<Exam> exams) {
+        this.exams = exams;
         return this;
     }
 
-    public Question addTest(Exam exam) {
-        this.tests.add(exam);
+    public Question addExam(Exam exam) {
+        this.exams.add(exam);
         exam.getQuestions().add(this);
         return this;
     }
 
-    public Question removeTest(Exam exam) {
-        this.tests.remove(exam);
+    public Question removeExam(Exam exam) {
+        this.exams.remove(exam);
         exam.getQuestions().remove(this);
         return this;
     }
 
-    public void setTests(Set<Exam> exams) {
-        this.tests = exams;
+    public void setExams(Set<Exam> exams) {
+        this.exams = exams;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

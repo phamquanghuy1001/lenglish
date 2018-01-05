@@ -2,63 +2,58 @@
 
     <div class="modal-header">
         <h4 class="modal-title" id="myExamLabel" jhiTranslate="lenglishApp.exam.home.createOrEditLabel">Create or edit a Exam</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!exam.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="exam.id" readonly />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="lenglishApp.exam.createDate" for="field_createDate">Create Date</label>
-            <div class="d-flex">
-                <input id="field_createDate" type="datetime-local" class="form-control" name="createDate" [(ngModel)]="exam.createDate"
-                  />
-            </div>
+            <input type="text" class="form-control" id="id" name="id" [(ngModel)]="exam.id" readonly />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="lenglishApp.exam.image" for="field_image">Image</label>
             <div>
-                <img [src]="'data:' + exam.imageContentType + ';base64,' + exam.image" style="max-height: 100px;" *ngIf="exam.image" alt="exam image"/>
+                <img [src]="'data:' + exam.imageContentType + ';base64,' + exam.image" style="max-height: 100px;" *ngIf="exam.image" alt="exam image"
+                />
                 <div *ngIf="exam.image" class="form-text text-danger clearfix">
                     <span class="pull-left">{{exam.imageContentType}}, {{byteSize(exam.image)}}</span>
                     <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                         <span class="fa fa-times"></span>
                     </button>
                 </div>
-                <input type="file" id="file_image" (change)="setFileData($event, exam, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                <input type="file" id="file_image" (change)="setFileData($event, exam, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"
+                />
             </div>
-            <input type="hidden" class="form-control" name="image" id="field_image"
-                [(ngModel)]="exam.image"  />
-            <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                [(ngModel)]="exam.imageContentType" />
+            <input type="hidden" class="form-control" name="image" id="field_image" [(ngModel)]="exam.image" />
+            <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType" [(ngModel)]="exam.imageContentType"
+            />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="lenglishApp.exam.title" for="field_title">Title</label>
-            <input type="text" class="form-control" name="title" id="field_title"
-                [(ngModel)]="exam.title"  />
+            <input type="text" class="form-control" name="title" id="field_title" [(ngModel)]="exam.title" />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="lenglishApp.exam.content" for="field_content">Content</label>
-            <input type="text" class="form-control" name="content" id="field_content"
-                [(ngModel)]="exam.content"  />
+            <input type="text" class="form-control" name="content" id="field_content" [(ngModel)]="exam.content" />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="lenglishApp.exam.point" for="field_point">Point</label>
-            <input type="number" class="form-control" name="point" id="field_point"
-                [(ngModel)]="exam.point"  />
+            <input type="number" class="form-control" name="point" id="field_point" [(ngModel)]="exam.point" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="lenglishApp.exam.level" for="field_level">Level</label>
+            <input type="number" class="form-control" name="level" id="field_level" [(ngModel)]="exam.level" />
         </div>
 
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            <span class="fa fa-save"></span>&nbsp;
+            <span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

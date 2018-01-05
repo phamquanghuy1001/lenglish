@@ -1,12 +1,12 @@
 <div>
     <h2>
         <span jhiTranslate="lenglishApp.customerUser.home.title">Customer Users</span>
-        <button class="btn btn-primary float-right jh-create-entity create-customer-user" [routerLink]="['/', { outlets: { popup: ['customer-user-new'] } }]">
+        <!-- <button class="btn btn-primary float-right jh-create-entity create-customer-user" [routerLink]="['/', { outlets: { popup: ['customer-user-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="lenglishApp.customerUser.home.createLabel">
-            Create new Customer User
+            <span jhiTranslate="lenglishApp.customerUser.home.createLabel">
+                Create new Customer User
             </span>
-        </button>
+        </button> -->
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -15,73 +15,81 @@
     <div class="table-responsive" *ngIf="customerUsers">
         <table class="table table-striped">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="icon"><span jhiTranslate="lenglishApp.customerUser.icon">Icon</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="point"><span jhiTranslate="lenglishApp.customerUser.point">Point</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="level"><span jhiTranslate="lenglishApp.customerUser.level">Level</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="todayPoint"><span jhiTranslate="lenglishApp.customerUser.todayPoint">Today Point</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="dateGoal"><span jhiTranslate="lenglishApp.customerUser.dateGoal">Date Goal</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="userId"><span jhiTranslate="lenglishApp.customerUser.user">User</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="roomId"><span jhiTranslate="lenglishApp.customerUser.room">Room</span> <span class="fa fa-sort"></span></th>
-            <th></th>
-            </tr>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th jhiSortBy="userId">
+                        <span jhiTranslate="lenglishApp.customerUser.user">User</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="icon">
+                        <span jhiTranslate="lenglishApp.customerUser.icon">Icon</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+
+                    <th jhiSortBy="point">
+                        <span jhiTranslate="lenglishApp.customerUser.point">Point</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="level">
+                        <span jhiTranslate="lenglishApp.customerUser.level">Level</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="todayPoint">
+                        <span jhiTranslate="lenglishApp.customerUser.todayPoint">Today Point</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="dateGoal">
+                        <span jhiTranslate="lenglishApp.customerUser.dateGoal">Date Goal</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let customerUser of customerUsers ;trackBy: trackId">
-                <td><a [routerLink]="['../customer-user', customerUser.id ]">{{customerUser.id}}</a></td>
-                <td>
-                    <a *ngIf="customerUser.icon" (click)="openFile(customerUser.iconContentType, customerUser.icon)">
-                        <img [src]="'data:' + customerUser.iconContentType + ';base64,' + customerUser.icon" style="max-height: 30px;" alt="customerUser image"/>
-                    </a>
-                    <span *ngIf="customerUser.icon">{{customerUser.iconContentType}}, {{byteSize(customerUser.icon)}}</span>
-                </td>
-                <td>{{customerUser.point}}</td>
-                <td>{{customerUser.level}}</td>
-                <td>{{customerUser.todayPoint}}</td>
-                <td>{{customerUser.dateGoal}}</td>
-                <td>
-                    {{customerUser.userId}}
-                </td>
-                <td>
-                    <div *ngIf="customerUser.roomId">
-                        <a [routerLink]="['../room', customerUser.roomId  ]" >{{customerUser.roomId}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../customer-user', customerUser.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'customer-user/'+ customerUser.id + '/edit'} }]"
-                                replaceUrl="true"
+                <tr *ngFor="let customerUser of customerUsers ;trackBy: trackId">
+                    <td>
+                        {{customerUser.user.login}}
+                    </td>
+
+                    <td>
+                        <a *ngIf="customerUser.icon" (click)="openFile(customerUser.iconContentType, customerUser.icon)">
+                            <img [src]="'data:' + customerUser.iconContentType + ';base64,' + customerUser.icon" style="max-height: 30px;" alt="customerUser image"
+                            />
+                        </a>
+                    </td>
+                    <td>{{customerUser.point}}</td>
+                    <td>{{customerUser.level}}</td>
+                    <td>{{customerUser.todayPoint}}</td>
+                    <td>{{customerUser.dateGoal}}</td>
+
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit" [routerLink]="['../customer-user', customerUser.id ]" class="btn btn-info btn-sm">
+                                <span class="fa fa-eye"></span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'admin/customer-user/'+ customerUser.id + '/edit'} }]" replaceUrl="true"
                                 class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'customer-user/'+ customerUser.id + '/delete'} }]"
-                                replaceUrl="true"
+                                <span class="fa fa-pencil"></span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'admin/customer-user/'+ customerUser.id + '/delete'} }]" replaceUrl="true"
                                 class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
+                                <span class="fa fa-remove"></span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
-        <div *ngIf="customerUsers && customerUsers.length">
-            <div class="row justify-content-center">
-                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-            </div>
-            <div class="row justify-content-center">
-                <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
-            </div>
+    <div *ngIf="customerUsers && customerUsers.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
 </div>

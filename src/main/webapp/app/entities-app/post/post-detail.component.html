@@ -1,8 +1,14 @@
-<div *ngIf="post">
+<div *ngIf="post" style="padding: 20px;">
     <h4>
-        <span jhiTranslate="lenglishApp.post.title">Title</span>:
+
+        <span routerLink="../" class="fa fa-arrow-left"></span>&nbsp;
+        <span>Chủ đề: </span>
         <span>{{post.title}}</span>
     </h4>
+    <hr>
+    <span>
+        Người tạo:{{post.userLogin}} - Ngày tạo:{{post.createDate | date:'hh:mm dd/MM/yyyy'}}
+    </span>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
@@ -11,36 +17,12 @@
             <span jhiTranslate="lenglishApp.post.content">Content</span>
         </dt>
         <dd>
-            <span>{{post.content}}</span>
-        </dd>
-        <dt>
-            <span jhiTranslate="lenglishApp.post.createDate">Create Date</span>
-        </dt>
-        <dd>
-            <span>{{post.createDate | date:'medium'}}</span>
-        </dd>
-        <dt>
-            <span jhiTranslate="lenglishApp.post.lastModifier">Last Modifier</span>
-        </dt>
-        <dd>
-            <span>{{post.lastModifier | date:'medium'}}</span>
-        </dd>
-        <dt>
-            <span jhiTranslate="lenglishApp.post.user">User</span>
-        </dt>
-        <dd>
-            {{post.userLogin}}
-        </dd>
+            <span [innerHTML]="post.content"></span>
+        </dd>   
     </dl>
-
-    <button type="submit" routerLink="../" class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;
-        <span jhiTranslate="entity.action.back"> Back</span>
-    </button>
-
-    <button type="button" [routerLink]="['/', { outlets: { popup: 'post/'+ post.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary">
+    <!-- <button type="button" [routerLink]="['/', { outlets: { popup: 'post/'+ post.id + '/edit'} }]" replaceUrl="true" class="btn btn-primary">
         <span class="fa fa-pencil"></span>&nbsp;
         <span jhiTranslate="entity.action.edit"> Edit</span>
-    </button>
+    </button> -->
     <jhi-comment [postId]="post.id"></jhi-comment>
 </div>

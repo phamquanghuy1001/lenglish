@@ -7,7 +7,7 @@ import { Question } from './question.model';
 import { QuestionService } from './question.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 
-import { Answer, AnswerService } from '../answer';
+import { Answer, AnswerService, Result } from '../answer';
 import { QuestionType } from '../../entities-app/question/index';
 
 @Component({
@@ -35,11 +35,12 @@ export class QuestionComponent implements OnInit, OnDestroy {
     reverse: any;
     indexQuestion: number;
     content: string;
-    result: String = 'init';
+    status: String = 'init';
     answer: Answer;
     answers: Answer[];
     submitAnswers: Answer[];
     count: number;
+    result: Result;
 
     constructor(
         private questionService: QuestionService,
@@ -58,19 +59,8 @@ export class QuestionComponent implements OnInit, OnDestroy {
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
-
     }
 
-    transition() {
-        this.router.navigate(['/learn/' + this.lessonId]);
-        this.loadByLesson(this.lessonId);
-    }
-
-    clear() {
-        this.page = 0;
-        this.router.navigate(['/learn/1' + this.lessonId]);
-        this.loadByLesson(this.lessonId);
-    }
     ngOnInit() {
         this.count = 0;
         this.activatedRoute.params.subscribe((params) => {
@@ -81,33 +71,15 @@ export class QuestionComponent implements OnInit, OnDestroy {
             this.currentAccount = account;
         });
         this.registerChangeInQuestions();
+        this.answer = new Answer();
     }
 
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: Question) {
-        return item.id;
-    }
-
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
-
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
     registerChangeInQuestions() {
         this.eventSubscriber = this.eventManager.subscribe('questionListModification', (response) => this.loadByLesson(this.lessonId));
-    }
-
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
-        }
-        return result;
     }
 
     private onSuccess(data, headers) {
@@ -118,7 +90,9 @@ export class QuestionComponent implements OnInit, OnDestroy {
         this.questions = data;
         this.submitAnswers = new Array(this.questions.length);
         this.indexQuestion = 0;
-        this.loadAnswers(this.questions[this.indexQuestion].id);
+        if (this.questions.length > 0) {
+            this.loadAnswers(this.questions[this.indexQuestion].id);
+        }
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
@@ -133,37 +107,42 @@ export class QuestionComponent implements OnInit, OnDestroy {
     }
 
     onCheck() {
-        console.log('---------index of question: ' + this.indexQuestion);
         const question: Question = this.questions[this.indexQuestion];
         const currentAnswer = new Answer();
         if (question.questionType + '' === 'SELECTION') {
             currentAnswer.questionId = question.id;
             currentAnswer.id = this.answer.id;
             if (this.answer.result === true) {
-                this.result = 'success';
+                this.status = 'success';
                 currentAnswer.result = true;
             } else {
-                this.result = 'fail';
+                this.status = 'fail';
                 currentAnswer.result = false;
             }
         } else if (question.questionType + '' === 'LISTENING') {
             currentAnswer.questionId = question.id;
             currentAnswer.content = this.content;
-            if (question.content.toLowerCase() === this.content.toLowerCase()) {
-                this.result = 'success';
+            if (this.content === undefined || this.content === '') {
+                this.status = 'fail';
+                currentAnswer.result = false;
+            } else if (question.content.toLowerCase().trim() === this.content.toLowerCase().trim()) {
+                this.status = 'success';
                 currentAnswer.result = true;
             } else {
-                this.result = 'fail';
+                this.status = 'fail';
                 currentAnswer.result = false;
             }
         } else if (question.questionType + '' === 'TRANSLATION') {
             currentAnswer.questionId = question.id;
             currentAnswer.content = this.content;
-            this.result = 'fail';
+            this.status = 'fail';
             currentAnswer.result = false;
             for (const ans of this.answers) {
-                if (ans.content.toLowerCase() === this.content.toLowerCase()) {
-                    this.result = 'success';
+                if (this.content === undefined || this.content === '') {
+                    this.status = 'fail';
+                    currentAnswer.result = false;
+                } else if (ans.content.toLowerCase().trim() === this.content.toLowerCase().trim()) {
+                    this.status = 'success';
                     currentAnswer.result = true;
                 }
             }
@@ -175,14 +154,15 @@ export class QuestionComponent implements OnInit, OnDestroy {
         if (this.indexQuestion < this.questions.length - 1) {
             this.indexQuestion++;
             this.loadAnswers(this.questions[this.indexQuestion].id);
-            this.result = 'init';
+            this.status = 'init';
+            this.content = '';
         } else {
             for (const ans of this.submitAnswers) {
-                if (ans.result === true) {
+                if (ans && ans.result === true) {
                     this.count++;
                 }
             }
-            this.result = 'finish';
+            this.status = 'finish';
         }
         this.answer = new Answer();
     }
@@ -200,5 +180,26 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
     onSubmitAnswers() {
         console.log(this.submitAnswers);
+        this.answerService.submitAnswer(this.lessonId, this.submitAnswers).subscribe((res: Result) => {
+            this.result = res;
+            this.eventManager.broadcast({ name: 'getUser', content: 'OK' });
+        });
+    }
+
+    onSkip() {
+        if (this.indexQuestion < this.questions.length - 1) {
+            this.indexQuestion++;
+            this.loadAnswers(this.questions[this.indexQuestion].id);
+            this.status = 'init';
+            this.content = '';
+        } else {
+            for (const ans of this.submitAnswers) {
+                if (ans && ans.result === true) {
+                    this.count++;
+                }
+            }
+            this.status = 'finish';
+        }
+        this.answer = new Answer();
     }
 }

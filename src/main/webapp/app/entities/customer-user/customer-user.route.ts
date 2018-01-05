@@ -50,7 +50,7 @@ export const customerUserRoute: Routes = [
 
 export const customerUserPopupRoute: Routes = [
     {
-        path: 'customer-user-new',
+        path: 'admin/customer-user-new',
         component: CustomerUserPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -60,7 +60,7 @@ export const customerUserPopupRoute: Routes = [
         outlet: 'popup'
     },
     {
-        path: 'customer-user/:id/edit',
+        path: 'admin/customer-user/:id/edit',
         component: CustomerUserPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -70,7 +70,7 @@ export const customerUserPopupRoute: Routes = [
         outlet: 'popup'
     },
     {
-        path: 'customer-user/:id/delete',
+        path: 'admin/customer-user/:id/delete',
         component: CustomerUserDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],

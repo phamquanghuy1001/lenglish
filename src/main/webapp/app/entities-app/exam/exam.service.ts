@@ -43,6 +43,11 @@ export class ExamService {
         return this.http.get(this.resourceUrl, options)
             .map((res: Response) => this.convertResponse(res));
     }
+    getAll(): Observable<ResponseWrapper> {
+        const options = createRequestOption();
+        return this.http.get(this.resourceUrl, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);

@@ -83,9 +83,10 @@ export class CustomerUserDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: CustomerUser) {
-        this.eventManager.broadcast({ name: 'customerUserListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'customerUserListModification', content: 'OK' });
         this.isSaving = false;
         this.activeModal.dismiss(result);
+        this.customerUserService.updateUser();
     }
 
     private onSaveError() {
@@ -116,11 +117,11 @@ export class CustomerUserPopupComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private customerUserPopupService: CustomerUserPopupService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.customerUserPopupService
                     .open(CustomerUserDialogComponent as Component, params['id']);
             } else {

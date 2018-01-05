@@ -1,27 +1,42 @@
-<div>
+<div *ngIf="customerUserService.currentUser">
     <div class="row">
         <div class="col-md-10">
             <h2>
                 <img src="/static_page/img/us.png" alt="" width="50"> Cây kỹ năng </h2>
         </div>
-        <div class="col-md-2">
+        <!-- <div class="col-md-2">
             <a href="" class="btn btn-default">
                 <img src="/static_page/img/shop.png" alt="" width="30"> Shop</a>
-        </div>
+        </div> -->
     </div>
 
     <br>
+    <jhi-alert></jhi-alert>
     <div id="lesson-tree">
         <ul class="list-group">
             <li *ngFor="let level of levels">
                 <span class="lesson" *ngFor="let lesson of lessons">
-                    <span  *ngIf="lesson.level == level">
-                        <a [routerLink]="['../lesson', lesson.id ]" *ngIf="lesson.image">
-                            <img [src]="'data:' + lesson.imageContentType + ';base64,' + lesson.image" width="100px" alt="lesson image" />
+                    <span *ngIf="lesson.level == level">
+                        <a [routerLink]="['../lesson', lesson.id ]" *ngIf="lesson.image && customerUserService.currentUser.level >= level">
+                            <img [src]="'data:' + lesson.imageContentType + ';base64,' + lesson.image" width="80px" alt="lesson image" />
+                            <p>{{lesson.title}}
+                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                            </p>
+                        </a>
+                        <a *ngIf="lesson.image && customerUserService.currentUser.level < level">
+                            <img [src]="'data:' + lesson.imageContentType + ';base64,' + lesson.image" width="80px" alt="lesson image" />
                             <p>{{lesson.title}}</p>
                         </a>
                     </span>
                 </span>
+                <div *ngFor="let exam of exams">
+                    <span *ngIf="exam.level == level">
+                        <a *ngIf="exam.level >= customerUserService.currentUser.level" [routerLink]="['../exam', exam.id ]" class="btn btn-lg btn-warning">
+                            <span class="glyphicon glyphicon-wrench"></span>{{exam.title}}</a>
+                        <a *ngIf="customerUserService.currentUser.level > exam.level" class="btn btn-lg btn-secondary">
+                            <span class="glyphicon glyphicon-wrench"></span>{{exam.title}}</a>
+                    </span>
+                </div>
             </li>
         </ul>
     </div>

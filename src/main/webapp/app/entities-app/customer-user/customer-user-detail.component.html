@@ -10,7 +10,6 @@
                 <a (click)="openFile(customerUser.iconContentType, customerUser.icon)">
                     <img [src]="'data:' + customerUser.iconContentType + ';base64,' + customerUser.icon" style="max-width: 100%;" alt="customerUser image"/>
                 </a>
-                {{customerUser.iconContentType}}, {{byteSize(customerUser.icon)}}
             </div>
         </dd>
         <dt><span jhiTranslate="lenglishApp.customerUser.point">Point</span></dt>

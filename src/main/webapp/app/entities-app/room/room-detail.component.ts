@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -7,7 +7,7 @@ import { Room } from './room.model';
 import { RoomService } from './room.service';
 import { JhiTrackerService } from './../../shared/tracker/tracker.service';
 import { Message } from './../../shared/tracker/Message.model';
-import {Account, Principal} from '../../shared';
+import { Account, Principal } from '../../shared';
 import { CustomerUser, CustomerUserService } from '../customer-user';
 
 @Component({
@@ -29,6 +29,7 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager,
         private roomService: RoomService,
         private route: ActivatedRoute,
+        private router: Router,
         public trackerService: JhiTrackerService,
         private customerUserService: CustomerUserService
     ) {
@@ -42,7 +43,6 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
             this.load(params['id']);
         });
         this.registerChangeInRooms();
-
     }
 
     load(id) {
@@ -51,11 +51,9 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
             this.thenLoad();
         });
     }
-
     thenLoad() {
         const that = this;
-        this.trackerService.subscribeMessage(this.room.id, function(data) {
-
+        this.trackerService.subscribeMessage(this.room.id, (data) => {
             const message: Message = JSON.parse(data.body);
             message.time = that.getShortTime();
             that.customerUserService.findByLogin(message.sender).subscribe((customerUser) => {
@@ -63,7 +61,6 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
                 message.iconContentType = customerUser.iconContentType;
                 that.trackerService.messages.push(message);
             });
-
         });
     }
     getShortTime() {
@@ -90,6 +87,12 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
-        this.trackerService.sendMessage( this.message, this.room.id );
+        this.trackerService.sendMessage(this.message, this.room.id);
+        this.message = '';
+    }
+
+    onOut() {
+        this.trackerService.unsubscribeMessage();
+        this.router.navigateByUrl('/app/room');
     }
 }

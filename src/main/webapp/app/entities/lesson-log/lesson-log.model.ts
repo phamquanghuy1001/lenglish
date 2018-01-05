@@ -9,6 +9,7 @@ export class LessonLog implements BaseEntity {
         public listening?: number,
         public selection?: number,
         public speech?: number,
+        public point?: number,
         public userId?: number,
         public lessonId?: number,
     ) {

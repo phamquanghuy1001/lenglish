@@ -8,11 +8,27 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 
 @Injectable()
 export class CustomerUserService {
-
     private resourceUrl = SERVER_API_URL + 'api/customer-users';
+    private resourceUrlTop = SERVER_API_URL + 'api/customer-users?page=0&size=20&sort=point,desc';
     private resourceUrlCurrent = SERVER_API_URL + 'api/current_customer-user';
+    public currentUser: CustomerUser;
+    public topUser: CustomerUser;
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
+
+    updateUser() {
+        this.findCurrent().subscribe(
+            (res: CustomerUser) => {
+                this.currentUser = res;
+            }
+        );
+        this.top().subscribe(
+            (res: ResponseWrapper) => {
+                this.topUser = res.json;
+            }
+        )
+    }
 
     create(customerUser: CustomerUser): Observable<CustomerUser> {
         const copy = this.convert(customerUser);
@@ -54,6 +70,11 @@ export class CustomerUserService {
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    top(): Observable<ResponseWrapper> {
+        return this.http.get(this.resourceUrlTop)
             .map((res: Response) => this.convertResponse(res));
     }
 

@@ -88,7 +88,6 @@ public class AccountResource {
 		if (!user.isPresent()) {
 			throw new InternalServerErrorException("No user was found for this reset key");
 		}
-		;
 	}
 
 	/**

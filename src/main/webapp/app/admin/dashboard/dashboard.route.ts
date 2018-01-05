@@ -8,12 +8,8 @@ export const dashboardRoute: Route[] = [{
     data: {
         pageTitle: 'tracker.title'
     }
-},
-{
+}, {
     path: '',
-    component: DashboardComponent,
-    data: {
-        pageTitle: 'tracker.title'
-    }
-}]
-    ;
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+}];

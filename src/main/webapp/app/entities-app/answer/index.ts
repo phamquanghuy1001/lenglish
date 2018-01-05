@@ -1,3 +1,4 @@
+export * from './result.model';
 export * from './answer.model';
 export * from './answer.service';
 export * from './answer.component';

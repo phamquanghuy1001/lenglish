@@ -6,6 +6,8 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'n
 import { Lesson } from './lesson.model';
 import { LessonService } from './lesson.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { Exam, ExamService } from '../../entities-app/exam/index';
+import { CustomerUser, CustomerUserService } from '../../entities-app/customer-user/index';
 
 @Component({
     selector: 'jhi-lesson',
@@ -17,6 +19,7 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 export class LessonComponent implements OnInit, OnDestroy {
 
     currentAccount: any;
+    customerUser: CustomerUser;
     lessons: Lesson[];
     error: any;
     success: any;
@@ -31,6 +34,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     previousPage: any;
     reverse: any;
     levels: number[];
+    levelMax: number;
+    exams: Exam[];
 
     constructor(
         private lessonService: LessonService,
@@ -40,7 +45,9 @@ export class LessonComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private dataUtils: JhiDataUtils,
         private router: Router,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private examService: ExamService,
+        public customerUserService: CustomerUserService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -52,14 +59,15 @@ export class LessonComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.lessonService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort()
-        }).subscribe(
+        this.lessonService.queryAll().subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
-            );
+        );
+        this.examService.getAll().subscribe(
+            (res: ResponseWrapper) => {
+                this.exams = res.json;
+            }
+        )
     }
     loadPage(page: number) {
         if (page !== this.previousPage) {
@@ -88,7 +96,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
     ngOnInit() {
-        this.levels = [1, 2, 3];
+        this.customerUserService.updateUser();
         this.loadAll();
         this.principal.identity().then((account) => {
             this.currentAccount = account;
@@ -129,6 +137,16 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.lessons = data;
+        this.levelMax = 0;
+        for (const lesson of this.lessons) {
+            if (this.levelMax < lesson.level) {
+                this.levelMax = lesson.level;
+            }
+        }
+        this.levels = Array(this.levelMax);
+        for (let i = 1; i <= this.levelMax; i++) {
+            this.levels[i - 1] = i;
+        }
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);

@@ -40,8 +40,8 @@ import {
         LenglishHomeModule,
         LenglishAdminModule,
         LenglishAccountModule,
-        LenglishEntityAppModule,
         LenglishEntityModule,
+        LenglishEntityAppModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

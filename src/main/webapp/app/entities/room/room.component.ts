@@ -62,7 +62,7 @@ currentAccount: any;
         }
     }
     transition() {
-        this.router.navigate(['/room'], {queryParams:
+        this.router.navigate(['/admin/room'], {queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,
@@ -74,7 +74,7 @@ currentAccount: any;
 
     clear() {
         this.page = 0;
-        this.router.navigate(['/room', {
+        this.router.navigate(['/admin/room', {
             page: this.page,
             sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
         }]);

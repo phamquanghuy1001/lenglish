@@ -20,7 +20,8 @@
             "title": "Title",
             "level": "Level",
             "content": "Content",
-            "image": "Image"
+            "image": "Image",
+            "errorLevel": "Khong du level"
         }
     }
 }
