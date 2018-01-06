@@ -60,8 +60,17 @@ export class RoomDetailComponent implements OnInit, OnDestroy {
                 message.image = customerUser.icon;
                 message.iconContentType = customerUser.iconContentType;
                 that.trackerService.messages.push(message);
+
+                this.scrollEnd();
+
             });
         });
+    }
+    scrollEnd() {
+        const scrollElement = document.getElementsByClassName('panel-body')[0];
+        setTimeout(function() {
+            scrollElement.scrollTop = scrollElement.scrollHeight;
+        }, 300);
     }
     getShortTime() {
         const d = new Date();
