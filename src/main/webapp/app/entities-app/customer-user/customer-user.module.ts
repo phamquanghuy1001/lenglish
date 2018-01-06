@@ -6,12 +6,9 @@ import { LenglishAdminModule } from '../../admin/admin.module';
 import {
     CustomerUserService,
     CustomerUserPopupService,
-    CustomerUserComponent,
     CustomerUserDetailComponent,
     CustomerUserDialogComponent,
     CustomerUserPopupComponent,
-    CustomerUserDeletePopupComponent,
-    CustomerUserDeleteDialogComponent,
     customerUserRoute,
     customerUserPopupRoute,
     CustomerUserResolvePagingParams,
@@ -29,19 +26,13 @@ const ENTITY_STATES = [
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
-        CustomerUserComponent,
         CustomerUserDetailComponent,
         CustomerUserDialogComponent,
-        CustomerUserDeleteDialogComponent,
         CustomerUserPopupComponent,
-        CustomerUserDeletePopupComponent,
     ],
     entryComponents: [
-        CustomerUserComponent,
         CustomerUserDialogComponent,
         CustomerUserPopupComponent,
-        CustomerUserDeleteDialogComponent,
-        CustomerUserDeletePopupComponent,
     ],
     providers: [
         CustomerUserService,

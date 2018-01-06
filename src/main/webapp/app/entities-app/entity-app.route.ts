@@ -4,7 +4,6 @@ import {
     postRoute,
     commentRoute,
     examRoute,
-    feedbackRoute,
     lessonRoute,
     questionRoute,
     roomRoute,
@@ -24,8 +23,7 @@ const APP_ROUTES = [
     },
     ...postRoute,
     ...commentRoute,
-    ...examRoute,
-    ...feedbackRoute,
+    // ...examRoute,
     ...lessonRoute,
     ...roomRoute,
     ...answerRoute,
@@ -43,6 +41,11 @@ export const appState: Routes = [{
     path: 'app',
     component: JhiMainComponent,
     children: questionRoute,
+},
+{
+    path: 'app',
+    component: JhiMainComponent,
+    children: examRoute,
 }
 
 ];

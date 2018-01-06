@@ -42,6 +42,8 @@ public class LessonLogDTO implements Serializable {
     @Max(value = 5)
     private Integer speech;
 
+    private Integer point;
+
     private Long userId;
 
     private Long lessonId;
@@ -102,6 +104,14 @@ public class LessonLogDTO implements Serializable {
         this.speech = speech;
     }
 
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -149,6 +159,7 @@ public class LessonLogDTO implements Serializable {
             ", listening='" + getListening() + "'" +
             ", selection='" + getSelection() + "'" +
             ", speech='" + getSpeech() + "'" +
+            ", point='" + getPoint() + "'" +
             "}";
     }
 }

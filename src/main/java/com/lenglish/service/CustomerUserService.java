@@ -98,4 +98,9 @@ public class CustomerUserService {
 		CustomerUser customerUser = customerUserRepository.findOneByUser(user);
 		return customerUserMapper.toDto(customerUser);
 	}
+
+	public void resetTodayPoint() {
+		customerUserRepository.resetTodayPoint();
+		
+	}
 }

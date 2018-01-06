@@ -15,7 +15,7 @@
 /* Chat containers */
 .container {
     border: 2px solid #dedede;
-    background-color: #f1f1f1;
+    // background-color: #f1f1f1;
     border-radius: 5px;
     padding: 10px;
     margin: 10px 0;
@@ -37,16 +37,22 @@
 /* Style images */
 .container img {
     float: left;
-    max-width: 60px;
+    max-width: 50px;
     width: 100%;
-    margin-right: 20px;
+    // margin-left: 20px;
+    // margin-right: 20px;
     border-radius: 50%;
+}
+
+.fa {
+    // margin-left: 20px;
+    // margin-right: 20px;
 }
 
 /* Style the right image */
 .container img.right {
     float: right;
-    margin-left: 20px;
+    // margin-left: 20px;
     margin-right:0;
 }
 
@@ -66,8 +72,67 @@
     font-weight: bold;
     text-transform: capitalize;
 }
-.ltm-chatbox {
-    max-height: 500px;
-    overflow: auto;
-    padding-right: 10px;
+
+// new code 
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li
+{
+    padding: 0 20px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+.chat-body {
+    // padding-right: 15px;
+}
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.panel-body
+{
+    overflow-y: scroll;
+    height: 450px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
 }

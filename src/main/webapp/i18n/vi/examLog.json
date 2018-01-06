@@ -17,6 +17,7 @@
             },
             "createDate": "Create Date",
             "complete": "Complete",
+            "point": "Point",
             "user": "User",
             "exam": "Exam"
         }

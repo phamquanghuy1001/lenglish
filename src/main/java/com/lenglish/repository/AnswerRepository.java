@@ -5,10 +5,12 @@ import com.lenglish.domain.Question;
 import com.lenglish.service.dto.AnswerDTO;
 
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
-
 
 /**
  * Spring Data JPA repository for the Answer entity.
@@ -18,5 +20,9 @@ import org.springframework.data.jpa.repository.*;
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
 	Page<Answer> findAllByQuestion(Pageable pageable, Question question);
+
+	List<Answer> findAllByQuestion(Question question);
+
+	List<Answer> findAllByQuestionAndResult(Question question, boolean b);
 
 }

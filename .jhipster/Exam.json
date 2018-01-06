@@ -6,7 +6,7 @@
             "relationshipName": "question",
             "otherEntityName": "question",
             "ownerSide": false,
-            "otherEntityRelationshipName": "test"
+            "otherEntityRelationshipName": "exam"
         }
     ],
     "fields": [
@@ -29,6 +29,10 @@
         },
         {
             "fieldName": "point",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "level",
             "fieldType": "Integer"
         }
     ],

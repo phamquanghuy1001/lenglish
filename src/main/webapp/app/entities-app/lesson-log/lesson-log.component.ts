@@ -58,12 +58,12 @@ export class LessonLogComponent implements OnInit, OnDestroy {
         private router: Router,
         private eventManager: JhiEventManager
     ) {
-        this.itemsPerPage = ITEMS_PER_PAGE;
+        this.itemsPerPage = 5;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = 0;
             this.previousPage = 0;
-            this.reverse = 'asc';
-            this.predicate = 'id';
+            this.reverse = 'desc';
+            this.predicate = 'createDate';
         });
     }
 
@@ -91,7 +91,7 @@ export class LessonLogComponent implements OnInit, OnDestroy {
                 {
                     page: this.page,
                     size: this.itemsPerPage,
-                    sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+                    sort: this.predicate + ',' + 'desc'
                 }
         });
         this.loadAll();
@@ -101,7 +101,7 @@ export class LessonLogComponent implements OnInit, OnDestroy {
         this.page = 0;
         this.router.navigate(['/lesson-log', {
             page: this.page,
-            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+            sort: this.predicate + ',' + 'desc'
         }]);
         this.loadAll();
     }
@@ -125,9 +125,9 @@ export class LessonLogComponent implements OnInit, OnDestroy {
     }
 
     sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
+        const result = [this.predicate + ',' + 'desc'];
+        if (this.predicate !== 'createDate') {
+            result.push('createDate');
         }
         return result;
     }
@@ -142,13 +142,13 @@ export class LessonLogComponent implements OnInit, OnDestroy {
         const _lineChartData: Array<any> = new Array(1);
         _lineChartData[0] = { data: new Array(this.lessonLogs.length), label: 'Point' };
         for (let j = 0; j < this.lessonLogs.length; j++) {
-            _lineChartData[0].data[j] = this.lessonLogs[j].complete;
-            _lineChartLabel[j] = this.lessonLogs[j].createDate.toLocaleDateString();
+            _lineChartData[0].data[this.lessonLogs.length - j - 1] = this.lessonLogs[j].complete;
+            _lineChartLabel[this.lessonLogs.length - j - 1] = this.lessonLogs[j].createDate.toLocaleDateString();
         }
         this.lineChartData = _lineChartData;
         setTimeout(() => {
             this.lineChartLabels = _lineChartLabel;
-        }, 10);
+        }, 20);
     }
 
     private onError(error) {

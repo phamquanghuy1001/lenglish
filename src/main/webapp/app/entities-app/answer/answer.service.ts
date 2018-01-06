@@ -5,6 +5,7 @@ import { SERVER_API_URL } from '../../app.constants';
 
 import { JhiDateUtils } from 'ng-jhipster';
 
+import { Result } from './result.model';
 import { Answer } from './answer.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 
@@ -13,8 +14,23 @@ export class AnswerService {
 
     private resourceUrl = SERVER_API_URL + 'api/answers';
     private resourceUrlFinder = SERVER_API_URL + 'api/answers_by_question';
+    private resourceUrlSubmitAnswerByLessson = SERVER_API_URL + 'api/submit_answers/';
+    private resourceUrlSubmitAnswerByExam = SERVER_API_URL + 'api/submit_answers_by_exam/';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+
+    submitAnswer(lessonId: number, answers: Answer[]): Observable<Result> {
+        return this.http.post(this.resourceUrlSubmitAnswerByLessson + lessonId, answers).map((res: Response) => {
+            const jsonResponse = res.json();
+            return this.convertItemFromServerResultLesson(jsonResponse);
+        });
+    }
+    submitAnswerByExam(examId: number, answers: Answer[]): Observable<Result> {
+        return this.http.post(this.resourceUrlSubmitAnswerByExam + examId, answers).map((res: Response) => {
+            const jsonResponse = res.json();
+            return this.convertItemFromServerResultLesson(jsonResponse);
+        });
+    }
 
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
@@ -55,4 +71,13 @@ export class AnswerService {
         copy.createDate = this.dateUtils.toDate(answer.createDate);
         return copy;
     }
+
+    /**
+    * Convert a returned JSON object to Result Lesson.
+    */
+    private convertItemFromServerResultLesson(json: any): Result {
+        const entity: Result = Object.assign(new Result(), json);
+        return entity;
+    }
+
 }

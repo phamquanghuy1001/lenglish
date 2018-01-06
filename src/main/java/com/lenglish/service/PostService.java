@@ -78,4 +78,8 @@ public class PostService {
         log.debug("Request to delete Post : {}", id);
         postRepository.delete(id);
     }
+
+	public long countPost() {
+		return postRepository.count();
+	}
 }

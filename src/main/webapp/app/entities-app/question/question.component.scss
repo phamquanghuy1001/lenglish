@@ -2,8 +2,14 @@
     background: #F0F0F0;
 }
 
+.progress{
+    background-color: #ced4dd;
+}
 
 .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     background: #e7e7e7;
 }
 
@@ -19,7 +25,22 @@
     background-color: #FFD3D1;
 }
 
+.feedback {
+    margin-top: 50px;
+    vertical-align: middle;
+    display: inline-block;
+    border-radius: 98px;
+    cursor: pointer;
+    font-weight: 700;
+    text-align: center;
+    user-select: none;
+    white-space: nowrap;
+    height: 50px;
+    width: 100%;    
+}
+
 .skip {
+    color:  #b4b3b3;    
     margin-top: 50px;
     vertical-align: middle;
     display: inline-block;
@@ -36,6 +57,7 @@
 }
 
 .next {
+    color:  #b4b3b3;
     margin-top: 50px;
     border-color: #bfbfbf;
     top: 41px;
@@ -76,4 +98,5 @@
 
 img {
     width: 200px;
+    height: 200px;
 }

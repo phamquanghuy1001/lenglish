@@ -4,7 +4,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@a
 import { UserRouteAccessService } from '../../shared';
 import { JhiPaginationUtil } from 'ng-jhipster';
 
-import { FeedbackComponent } from './feedback.component';
+import { FeedbackPopupComponent } from './feedback-dialog.component';
 
 @Injectable()
 export class FeedbackResolvePagingParams implements Resolve<any> {
@@ -22,17 +22,35 @@ export class FeedbackResolvePagingParams implements Resolve<any> {
     }
 }
 
-export const feedbackRoute: Routes = [
+export const feedbackPopupRoute: Routes = [
     {
-        path: 'feedback',
-        component: FeedbackComponent,
-        resolve: {
-            'pagingParams': FeedbackResolvePagingParams
-        },
+        path: 'feedback-new/',
+        component: FeedbackPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'lenglishApp.feedback.home.title'
         },
-        canActivate: [UserRouteAccessService]
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    },
+    {
+        path: 'feedback-new/:questionId',
+        component: FeedbackPopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'lenglishApp.feedback.home.title'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    },
+    {
+        path: 'feedback/:id/edit',
+        component: FeedbackPopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'lenglishApp.feedback.home.title'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
     }
 ];

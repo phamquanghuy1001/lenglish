@@ -21,6 +21,7 @@
             "listening": "Listening",
             "selection": "Selection",
             "speech": "Speech",
+            "point": "Point",
             "user": "User",
             "lesson": "Lesson"
         }

@@ -56,6 +56,9 @@ public class LessonLog implements Serializable {
     @Column(name = "speech", nullable = false)
     private Integer speech;
 
+    @Column(name = "point")
+    private Integer point;
+
     @ManyToOne
     private User user;
 
@@ -149,6 +152,19 @@ public class LessonLog implements Serializable {
         this.speech = speech;
     }
 
+    public Integer getPoint() {
+        return point;
+    }
+
+    public LessonLog point(Integer point) {
+        this.point = point;
+        return this;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
+
     public User getUser() {
         return user;
     }
@@ -206,6 +222,7 @@ public class LessonLog implements Serializable {
             ", listening='" + getListening() + "'" +
             ", selection='" + getSelection() + "'" +
             ", speech='" + getSpeech() + "'" +
+            ", point='" + getPoint() + "'" +
             "}";
     }
 }

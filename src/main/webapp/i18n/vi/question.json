@@ -21,7 +21,7 @@
             "image": "Image",
             "resource": "Resource",
             "lesson": "Lesson",
-            "test": "Test"
+            "exam": "Exam"
         }
     }
 }

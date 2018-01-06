@@ -130,6 +130,7 @@ export class JhiTrackerService {
             this.subscriberMessage.unsubscribe();
         }
         this.listener = this.createListener();
+        this.roomId = 0;
     }
 
     private createListener(): Observable<any> {

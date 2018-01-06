@@ -9,6 +9,7 @@ export class Exam implements BaseEntity {
         public title?: string,
         public content?: string,
         public point?: number,
+        public level?: number,
         public questions?: BaseEntity[],
     ) {
     }

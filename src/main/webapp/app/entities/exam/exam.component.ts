@@ -63,7 +63,7 @@ currentAccount: any;
         }
     }
     transition() {
-        this.router.navigate(['/exam'], {queryParams:
+        this.router.navigate(['/admin/exam'], {queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,
@@ -75,7 +75,7 @@ currentAccount: any;
 
     clear() {
         this.page = 0;
-        this.router.navigate(['/exam', {
+        this.router.navigate(['/admin/exam', {
             page: this.page,
             sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
         }]);

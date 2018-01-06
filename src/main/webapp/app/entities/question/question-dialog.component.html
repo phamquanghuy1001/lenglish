@@ -7,25 +7,14 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!question.id">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="question.id" readonly />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="lenglishApp.question.createDate" for="field_createDate">Create Date</label>
-            <div class="d-flex">
-                <input id="field_createDate" type="datetime-local" class="form-control" name="createDate" [(ngModel)]="question.createDate"
-                  />
-            </div>
-        </div>
+       
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="lenglishApp.question.questionType" for="field_questionType">Question Type</label>
             <select class="form-control" name="questionType" [(ngModel)]="question.questionType" id="field_questionType"  required>
                 <option value="TRANSLATION">{{'lenglishApp.QuestionType.TRANSLATION' | translate}}</option>
                 <option value="LISTENING">{{'lenglishApp.QuestionType.LISTENING' | translate}}</option>
                 <option value="SELECTION">{{'lenglishApp.QuestionType.SELECTION' | translate}}</option>
-                <option value="SPEECH">{{'lenglishApp.QuestionType.SPEECH' | translate}}</option>
+                <!-- <option value="SPEECH">{{'lenglishApp.QuestionType.SPEECH' | translate}}</option> -->
             </select>
             <div [hidden]="!(editForm.controls.questionType?.dirty && editForm.controls.questionType?.invalid)">
                 <small class="form-text text-danger"
@@ -45,7 +34,7 @@
                 </small>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" *ngIf="question.questionType && question.questionType == 'SELECTION'">
             <label class="form-control-label" jhiTranslate="lenglishApp.question.image" for="field_image">Image</label>
             <div>
                 <img [src]="'data:' + question.imageContentType + ';base64,' + question.image" style="max-height: 100px;" *ngIf="question.image" alt="question image"/>
@@ -62,7 +51,7 @@
             <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
                 [(ngModel)]="question.imageContentType" />
         </div>
-        <div class="form-group">
+        <div class="form-group" *ngIf="question.questionType && question.questionType == 'LISTENING'">
             <label class="form-control-label" jhiTranslate="lenglishApp.question.resource" for="field_resource">Resource</label>
             <div>
                 <div *ngIf="question.resource" class="form-text text-danger clearfix">
@@ -89,9 +78,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label jhiTranslate="lenglishApp.question.test" for="field_test">Test</label>
-            <select class="form-control" id="field_test" multiple name="test" [(ngModel)]="question.tests">
-                <option [ngValue]="getSelected(question.tests, examOption)" *ngFor="let examOption of exams; trackBy: trackExamById">{{examOption.id}}</option>
+            <label jhiTranslate="lenglishApp.question.exam" for="field_exam">Exam</label>
+            <select class="form-control" id="field_exam" multiple name="exam" [(ngModel)]="question.exams">
+                <option [ngValue]="getSelected(question.exams, examOption)" *ngFor="let examOption of exams; trackBy: trackExamById">{{examOption.id}}</option>
             </select>
         </div>
     </div>

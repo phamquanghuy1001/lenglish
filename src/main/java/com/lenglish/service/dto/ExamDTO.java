@@ -27,6 +27,8 @@ public class ExamDTO implements Serializable {
 
     private Integer point;
 
+    private Integer level;
+
     public Long getId() {
         return id;
     }
@@ -83,6 +85,14 @@ public class ExamDTO implements Serializable {
         this.point = point;
     }
 
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -113,6 +123,7 @@ public class ExamDTO implements Serializable {
             ", title='" + getTitle() + "'" +
             ", content='" + getContent() + "'" +
             ", point='" + getPoint() + "'" +
+            ", level='" + getLevel() + "'" +
             "}";
     }
 }

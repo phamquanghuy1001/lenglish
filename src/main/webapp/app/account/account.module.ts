@@ -16,13 +16,15 @@ import {
     PasswordResetInitComponent,
     PasswordResetFinishComponent,
     SettingsComponent,
-    accountState
+    accountState,
+    registerState
 } from './';
 
 @NgModule({
     imports: [
         LenglishSharedModule,
-        RouterModule.forRoot(accountState, { useHash: true })
+        RouterModule.forRoot(accountState, { useHash: true }),
+        RouterModule.forRoot(registerState, { useHash: true })
     ],
     declarations: [
         ActivateComponent,

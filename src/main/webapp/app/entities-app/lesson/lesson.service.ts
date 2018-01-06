@@ -44,6 +44,11 @@ export class LessonService {
         return this.http.get(this.resourceUrlByActivated, options)
             .map((res: Response) => this.convertResponse(res));
     }
+    queryAll(): Observable<ResponseWrapper> {
+        const options = createRequestOption();
+        return this.http.get(this.resourceUrlByActivated, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);

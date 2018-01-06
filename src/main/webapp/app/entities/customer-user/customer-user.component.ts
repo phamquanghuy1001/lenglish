@@ -63,7 +63,7 @@ currentAccount: any;
         }
     }
     transition() {
-        this.router.navigate(['/customer-user'], {queryParams:
+        this.router.navigate(['/admin/customer-user'], {queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,
@@ -75,7 +75,7 @@ currentAccount: any;
 
     clear() {
         this.page = 0;
-        this.router.navigate(['/customer-user', {
+        this.router.navigate(['/admin/customer-user', {
             page: this.page,
             sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
         }]);

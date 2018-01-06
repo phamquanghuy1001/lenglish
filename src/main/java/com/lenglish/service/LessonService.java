@@ -84,4 +84,8 @@ public class LessonService {
         return lessonRepository.findAllByActivated(pageable, activated)
             .map(lessonMapper::toDto);
 	}
+
+	public long countLesson() {
+		return lessonRepository.count();
+	}
 }

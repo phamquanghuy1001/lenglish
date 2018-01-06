@@ -5,7 +5,7 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { Room } from './room.model';
 import { RoomService } from './room.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { ITEMS_PER_PAGE, Principal, ResponseWrapper, JhiTrackerService } from '../../shared';
 
 @Component({
     selector: 'jhi-room',
@@ -16,7 +16,7 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 })
 export class RoomComponent implements OnInit, OnDestroy {
 
-currentAccount: any;
+    currentAccount: any;
     rooms: Room[];
     error: any;
     success: any;
@@ -38,7 +38,8 @@ currentAccount: any;
         private principal: Principal,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private trackerService: JhiTrackerService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -53,10 +54,11 @@ currentAccount: any;
         this.roomService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+            sort: this.sort()
+        }).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
-        );
+            );
     }
     loadPage(page: number) {
         if (page !== this.previousPage) {
@@ -65,12 +67,13 @@ currentAccount: any;
         }
     }
     transition() {
-        this.router.navigate(['/room'], {queryParams:
-            {
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+        this.router.navigate(['/room'], {
+            queryParams:
+                {
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+                }
         });
         this.loadAll();
     }
@@ -84,6 +87,9 @@ currentAccount: any;
         this.loadAll();
     }
     ngOnInit() {
+        if (this.trackerService.roomId > 0) {
+            this.router.navigateByUrl('/app/room/' + this.trackerService.roomId);
+        }
         this.loadAll();
         this.principal.identity().then((account) => {
             this.currentAccount = account;

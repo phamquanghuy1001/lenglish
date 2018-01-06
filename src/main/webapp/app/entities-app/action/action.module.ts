@@ -5,7 +5,7 @@ import { LenglishSharedModule } from '../../shared';
 import { LenglishAdminModule } from '../../admin/admin.module';
 import {
     ActionComponent,
-    actionRoute
+    actionRoute,
 } from './';
 
 const ENTITY_STATES = [

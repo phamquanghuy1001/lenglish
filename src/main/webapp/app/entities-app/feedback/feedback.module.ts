@@ -5,13 +5,15 @@ import { LenglishSharedModule } from '../../shared';
 import { LenglishAdminModule } from '../../admin/admin.module';
 import {
     FeedbackService,
-    FeedbackComponent,
-    feedbackRoute,
+    FeedbackPopupService,
+    FeedbackDialogComponent,
+    FeedbackPopupComponent,
+    feedbackPopupRoute,
     FeedbackResolvePagingParams,
 } from './';
 
 const ENTITY_STATES = [
-    ...feedbackRoute,
+    ...feedbackPopupRoute,
 ];
 
 @NgModule({
@@ -21,13 +23,16 @@ const ENTITY_STATES = [
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
-        FeedbackComponent,
+        FeedbackDialogComponent,
+        FeedbackPopupComponent,
     ],
     entryComponents: [
-        FeedbackComponent,
+        FeedbackDialogComponent,
+        FeedbackPopupComponent,
     ],
     providers: [
         FeedbackService,
+        FeedbackPopupService,
         FeedbackResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

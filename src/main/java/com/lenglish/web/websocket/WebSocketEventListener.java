@@ -80,8 +80,11 @@ public class WebSocketEventListener {
         chatMessage.setSender(userFromEvent.getUsername());
 
         String destination = headerAccessor.getDestination();
-
-        messagingTemplate.convertAndSend(destination, chatMessage);
+        try {        	
+        	messagingTemplate.convertAndSend(destination, chatMessage);
+        } catch (Exception e) {
+        	logger.error("Error Event Listener");
+        }
         logger.info("DISCONNECT");
     }
 

@@ -19,6 +19,7 @@
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="createDate"><span jhiTranslate="lenglishApp.examLog.createDate">Create Date</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="complete"><span jhiTranslate="lenglishApp.examLog.complete">Complete</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="point"><span jhiTranslate="lenglishApp.examLog.point">Point</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="userId"><span jhiTranslate="lenglishApp.examLog.user">User</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="examId"><span jhiTranslate="lenglishApp.examLog.exam">Exam</span> <span class="fa fa-sort"></span></th>
             <th></th>
@@ -29,6 +30,7 @@
                 <td><a [routerLink]="['../exam-log', examLog.id ]">{{examLog.id}}</a></td>
                 <td>{{examLog.createDate | date:'medium'}}</td>
                 <td>{{examLog.complete}}</td>
+                <td>{{examLog.point}}</td>
                 <td>
                     {{examLog.userId}}
                 </td>

@@ -35,7 +35,7 @@ public class QuestionDTO implements Serializable {
 
     private Long lessonId;
 
-    private Set<ExamDTO> tests = new HashSet<>();
+    private Set<ExamDTO> exams = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -109,12 +109,12 @@ public class QuestionDTO implements Serializable {
         this.lessonId = lessonId;
     }
 
-    public Set<ExamDTO> getTests() {
-        return tests;
+    public Set<ExamDTO> getExams() {
+        return exams;
     }
 
-    public void setTests(Set<ExamDTO> exams) {
-        this.tests = exams;
+    public void setExams(Set<ExamDTO> exams) {
+        this.exams = exams;
     }
 
     @Override

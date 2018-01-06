@@ -5,21 +5,13 @@ import { LenglishSharedModule } from '../../shared';
 import { LenglishAdminModule } from '../../admin/admin.module';
 import {
     ExamLogService,
-    ExamLogPopupService,
     ExamLogComponent,
-    ExamLogDetailComponent,
-    ExamLogDialogComponent,
-    ExamLogPopupComponent,
-    ExamLogDeletePopupComponent,
-    ExamLogDeleteDialogComponent,
     examLogRoute,
-    examLogPopupRoute,
     ExamLogResolvePagingParams,
 } from './';
 
 const ENTITY_STATES = [
     ...examLogRoute,
-    ...examLogPopupRoute,
 ];
 
 @NgModule({
@@ -30,22 +22,12 @@ const ENTITY_STATES = [
     ],
     declarations: [
         ExamLogComponent,
-        ExamLogDetailComponent,
-        ExamLogDialogComponent,
-        ExamLogDeleteDialogComponent,
-        ExamLogPopupComponent,
-        ExamLogDeletePopupComponent,
     ],
     entryComponents: [
         ExamLogComponent,
-        ExamLogDialogComponent,
-        ExamLogPopupComponent,
-        ExamLogDeleteDialogComponent,
-        ExamLogDeletePopupComponent,
     ],
     providers: [
         ExamLogService,
-        ExamLogPopupService,
         ExamLogResolvePagingParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

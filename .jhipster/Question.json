@@ -10,7 +10,7 @@
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "question",
-            "relationshipName": "test",
+            "relationshipName": "exam",
             "otherEntityName": "exam",
             "otherEntityField": "id",
             "ownerSide": true

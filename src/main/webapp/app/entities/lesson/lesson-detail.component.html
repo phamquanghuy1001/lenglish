@@ -22,13 +22,13 @@
         </dd>
         <dt><span jhiTranslate="lenglishApp.lesson.content">Content</span></dt>
         <dd>
-            <span>{{lesson.content}}</span>
+            <span [innerHTML]="lesson.content"></span>
         </dd>
         <dt><span jhiTranslate="lenglishApp.lesson.image">Image</span></dt>
         <dd>
             <div *ngIf="lesson.image">
                 <a (click)="openFile(lesson.imageContentType, lesson.image)">
-                    <img [src]="'data:' + lesson.imageContentType + ';base64,' + lesson.image" style="max-width: 100%;" alt="lesson image"/>
+                    <img [src]="'data:' + lesson.imageContentType + ';base64,' + lesson.image" style="max-width: 60px;" alt="lesson image"/>
                 </a>
                 {{lesson.imageContentType}}, {{byteSize(lesson.image)}}
             </div>

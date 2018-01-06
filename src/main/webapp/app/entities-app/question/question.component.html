@@ -1,122 +1,136 @@
-<div *ngIf="questions && result!='finish'" id="wrapper">
-    <br>
-    <h3 class="text-center text-bold">5/12</h3 class="text-center">
-    <br>
-    <br>
-    <div class=" container">
-        <div *ngIf="questions[indexQuestion].questionType == 'SELECTION'" class="row selection">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <h1 data-test="challenge-header" class="_1Zqmf">
-                    <span>Chọn từ cho "{{questions[indexQuestion].content}}"</span>
-                </h1>
-                <br>
-                <ul>
-                    <li class="_2GNNM _3F380" *ngFor="let answer of answers">
-                        <img [src]="'data:' + answer.imageContentType + ';base64,' + answer.image" alt="answer image" class="img-thumbnail mx-auto"
-                        />
-                        <div>
-                            <input type="radio" name="choose" value="1" class="">
-                            <span>{{answer.content}}</span>
+<div *ngIf="questions">
+    <div *ngIf="questions.length > 0">
+        <div *ngIf="status!='finish'" id="wrapper">
+            <br>
+            <div class="container">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="questions.length" aria-valuemax="100" [style.width]="((indexQuestion + 1)*100/questions.length) + '%'">
+                    </div>
+                </div>
+                <h3 class="text-center text-bold">{{indexQuestion+1}}/{{questions.length}}</h3 class="text-center">
+            </div>
+            <div class="container" *ngIf="questions.length > 0" style="height: 400px">
+                <div *ngIf="questions[indexQuestion].questionType == 'SELECTION'" class="row selection">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <h1 data-test="challenge-header" class="_1Zqmf">
+                            <span>Chọn từ cho "{{questions[indexQuestion].content}}"</span>
+                        </h1>
+                        <br>
+                        <ul>
+                            <li class="_2GNNM _3F380" *ngFor="let answer of answers">
+                                <img [src]="'data:' + answer.imageContentType + ';base64,' + answer.image" alt="answer image" class="img-thumbnail mx-auto"
+                                />
+                                <div>
+                                    <input type="radio" name="choose" value="1" class="" (click)="onChooseAnswer(answer);">
+                                    <span>{{answer.content}}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+
+                <div *ngIf="questions[indexQuestion].questionType == 'TRANSLATION'" class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <h1 data-test="challenge-header" class="_1Zqmf">
+                            <span>Dịch câu sau</span>
+                        </h1>
+                        <br>
+                        <div class="">
+                            <h3 class="">
+                                "{{questions[indexQuestion].content}}"
+                            </h3>
+                            <br>
+                            <div class="">
+                                <textarea class="form-control" rows="5" id="comment" placeholder="Nhap bang tieng viet" [(ngModel)]="content"></textarea>
+                            </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div *ngIf="questions[indexQuestion].questionType == 'LISTENING'" class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <h1 data-test="challenge-header" class="_1Zqmf">
+                            <span>Viết nội dung nghe được</span>
+                        </h1>
+                        <br>
+                        <div class="">
+                            <div class="">
+                                <i class="fa fa-volume-up fa-3x" aria-hidden="true" (click)="onPlay()"></i>
+                            </div>
+                            <div class="">
+                                <textarea class="form-control" rows="5" id="comment" placeholder="Nhap bang tieng anh" [(ngModel)]="content"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
             </div>
-            <div class="col-md-2"></div>
+            <div class="footer" *ngIf="status=='init'">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button class="skip" (click)="onSkip()">Bỏ qua</button>
+                        </div>
+                        <div class="col-md-8"></div>
+                        <div class="col-md-2">
+                            <button class="next" (click)="onCheck()" [class.check_success]="content||answer.id">Kiểm tra</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer success" *ngIf="status=='success'">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button class="feedback">
+                                <a [routerLink]="['/', { outlets: { popup: 'feedback-new' + '/' + questions[indexQuestion].id } }]">
+                                    <i class="fa fa-envelope-open-o" aria-hidden="true"> Báo cáo</i>
+                                </a>
+                            </button>
+                        </div>
+                        <div class="col-md-8"></div>
+                        <div class="col-md-2">
+                            <button class="next check_success" (click)="onNext()">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer fail" *ngIf="status=='fail'">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button class="feedback">
+                                <a [routerLink]="['/', { outlets: { popup: 'feedback-new' + '/' + questions[indexQuestion].id } }]">
+                                    <i class="fa fa-envelope-open-o" aria-hidden="true"> Báo cáo</i>
+                                </a>
+                            </button>
+                        </div>
+                        <div class="col-md-8" style="padding-top:60px;">
+
+                        </div>
+                        <div class="col-md-2">
+                            <button class="next check_fail" (click)="onNext()">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div *ngIf="questions[indexQuestion].questionType == 'TRANSLATION'" class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <h1 data-test="challenge-header" class="_1Zqmf">
-                    <span>Viết mục này bằng Tiếng Việt</span>
-                </h1>
+        <div *ngIf="status=='finish'">
+            <div class="container text-center" style="height:500px;">
                 <br>
-                <div class="">
-                    <div class="">
-                        {{questions[indexQuestion].content}}
-                    </div>
-                    <div class="">
-                        <textarea class="form-control" rows="5" id="comment" placeholder="Nhap bang tieng viet"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3"></div>
-        </div>
-        <div *ngIf="questions[indexQuestion].questionType == 'LISTENING'" class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <h1 data-test="challenge-header" class="_1Zqmf">
-                    <span>Viết nội dung nghe được</span>
-                </h1>
                 <br>
-                <div class="">
-                    <div class="">
-                        <i class="fa fa-volume-up fa-3x" aria-hidden="true" (click)="onPlay()"></i>
-                    </div>
-                    <div class="">
-                        <textarea class="form-control" rows="5" id="comment" placeholder="Nhap bang tieng anh" [(ngModel)]="content"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3"></div>
-        </div>
-    </div>
-    <br>
-    <br>
-    <br>
-
-    <div class="footer" *ngIf="!result">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    <button class="skip">Bỏ qua</button>
-                </div>
-                <div class="col-md-8"></div>
-                <div class="col-md-2">
-                    <button class="next" (click)="onCheck()">Kiểm tra</button>
-                </div>
+                <br>
+                <br>
+                <h1>Bài học kết thúc!</h2>
+                    <h3 class="text-center">Hoàn thành {{count}}/{{questions.length}}</h3>
+                    <h3 *ngIf="(count*5/questions.length) >= 4">Bạn được cộng 10 Điểm</h3>
+                    <a class="btn btn-danger" [routerLink]="['/app']" (click)="onSubmitAnswers()">Ghi nhận kết quả</a>
             </div>
         </div>
     </div>
-    <div class="footer success" *ngIf="result=='success'">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    <button class="skip">Bỏ qua</button>
-                </div>
-                <div class="col-md-8"></div>
-                <div class="col-md-2">
-                    <button class="next check_success" (click)="onNext()">Next</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer fail" *ngIf="result=='fail'">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    <button class="skip">Bỏ qua</button>
-                </div>
-                <div class="col-md-8"></div>
-                <div class="col-md-2">
-                    <button class="next check_fail" (click)="onNext()">Next</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="result=='finish'">
-    <br>
-    <br>
-    <br>
-    <br>
-    <h2 class="text-center">Hoan thanh 5/5</h2>
-    <a class="text-center" [routerLink]="['/app']">Tro ve</a>
-    <br>
-    <br>
-    <br>
-    <br>
-
 </div>

@@ -15,13 +15,13 @@
                                  referencedTableName="lesson"/>
 
         <addForeignKeyConstraint baseColumnNames="questions_id"
-                                 baseTableName="question_test"
-                                 constraintName="fk_question_test_questions_id"
+                                 baseTableName="question_exam"
+                                 constraintName="fk_question_exam_questions_id"
                                  referencedColumnNames="id"
                                  referencedTableName="question"/>
-        <addForeignKeyConstraint baseColumnNames="tests_id"
-                                 baseTableName="question_test"
-                                 constraintName="fk_question_test_tests_id"
+        <addForeignKeyConstraint baseColumnNames="exams_id"
+                                 baseTableName="question_exam"
+                                 constraintName="fk_question_exam_exams_id"
                                  referencedColumnNames="id"
                                  referencedTableName="exam"/>
         

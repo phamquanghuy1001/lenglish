@@ -12,7 +12,8 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 export class QuestionService {
 
     private resourceUrl = SERVER_API_URL + 'api/questions';
-    private resourceUrlFinder = SERVER_API_URL + 'api/questions_by_lesson';
+    private resourceUrlFinderByQuestion = SERVER_API_URL + 'api/questions_by_lesson';
+    private resourceUrlFinderByExam = SERVER_API_URL + 'api/questions_by_exam';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
@@ -23,7 +24,12 @@ export class QuestionService {
     }
 
     queryByLesson(lessonId?: number): Observable<ResponseWrapper> {
-        return this.http.get(this.resourceUrlFinder + '/' + lessonId)
+        return this.http.get(this.resourceUrlFinderByQuestion + '/' + lessonId)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    queryByExam(examId?: number): Observable<ResponseWrapper> {
+        return this.http.get(this.resourceUrlFinderByExam + '/' + examId)
             .map((res: Response) => this.convertResponse(res));
     }
 

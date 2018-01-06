@@ -32,6 +32,9 @@ public class ExamLog implements Serializable {
     @Column(name = "jhi_complete", nullable = false)
     private Integer complete;
 
+    @Column(name = "point")
+    private Integer point;
+
     @ManyToOne
     private User user;
 
@@ -71,6 +74,19 @@ public class ExamLog implements Serializable {
 
     public void setComplete(Integer complete) {
         this.complete = complete;
+    }
+
+    public Integer getPoint() {
+        return point;
+    }
+
+    public ExamLog point(Integer point) {
+        this.point = point;
+        return this;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
     }
 
     public User getUser() {
@@ -126,6 +142,7 @@ public class ExamLog implements Serializable {
             "id=" + getId() +
             ", createDate='" + getCreateDate() + "'" +
             ", complete='" + getComplete() + "'" +
+            ", point='" + getPoint() + "'" +
             "}";
     }
 }

@@ -44,7 +44,10 @@ public class Exam implements Serializable {
     @Column(name = "point")
     private Integer point;
 
-    @ManyToMany(mappedBy = "tests")
+    @Column(name = "jhi_level")
+    private Integer level;
+
+    @ManyToMany(mappedBy = "exams")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Question> questions = new HashSet<>();
@@ -136,6 +139,19 @@ public class Exam implements Serializable {
         this.point = point;
     }
 
+    public Integer getLevel() {
+        return level;
+    }
+
+    public Exam level(Integer level) {
+        this.level = level;
+        return this;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
     public Set<Question> getQuestions() {
         return questions;
     }
@@ -147,13 +163,13 @@ public class Exam implements Serializable {
 
     public Exam addQuestion(Question question) {
         this.questions.add(question);
-        question.getTests().add(this);
+        question.getExams().add(this);
         return this;
     }
 
     public Exam removeQuestion(Question question) {
         this.questions.remove(question);
-        question.getTests().remove(this);
+        question.getExams().remove(this);
         return this;
     }
 
@@ -192,6 +208,7 @@ public class Exam implements Serializable {
             ", title='" + getTitle() + "'" +
             ", content='" + getContent() + "'" +
             ", point='" + getPoint() + "'" +
+            ", level='" + getLevel() + "'" +
             "}";
     }
 }

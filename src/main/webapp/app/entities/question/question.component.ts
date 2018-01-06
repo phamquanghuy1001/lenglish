@@ -39,16 +39,12 @@ currentAccount: any;
         private eventManager: JhiEventManager
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
-        this.page = 0;
-        this.previousPage = 0;
-        this.reverse = 'asc';
-        this.predicate = 'id';
-        // this.routeData = this.activatedRoute.data.subscribe((data) => {
-        //     this.page = data['pagingParams'].page;
-        //     this.previousPage = data['pagingParams'].page;
-        //     this.reverse = data['pagingParams'].ascending;
-        //     this.predicate = data['pagingParams'].predicate;
-        // });
+        this.routeData = this.activatedRoute.data.subscribe((data) => {
+            this.page = data['pagingParams'].page;
+            this.previousPage = data['pagingParams'].page;
+            this.reverse = data['pagingParams'].ascending;
+            this.predicate = data['pagingParams'].predicate;
+        });
     }
 
     loadAll() {
@@ -67,7 +63,7 @@ currentAccount: any;
         }
     }
     transition() {
-        this.router.navigate([this.router.url.split('?')[0]], {queryParams:
+        this.router.navigate(['/admin/question'], {queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,
@@ -79,7 +75,7 @@ currentAccount: any;
 
     clear() {
         this.page = 0;
-        this.router.navigate([this.router.url.split('?')[0], {
+        this.router.navigate(['/admin/question', {
             page: this.page,
             sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
         }]);

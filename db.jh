@@ -8,7 +8,7 @@ entity CustomerUser {
 	point Integer required,
     level Integer required,
     todayPoint Integer,
-    dateGoal Integer,
+    dateGoal Integer
 }
 
 entity Post {
@@ -51,7 +51,7 @@ enum QuestionType {
 
 entity Question {
     createDate ZonedDateTime,
-    QuestionType QuestionType required,
+    questionType QuestionType required,
     content String required,
     image ImageBlob,
     resource AnyBlob    
@@ -69,7 +69,8 @@ entity Exam {
     image ImageBlob,
     title String,
     content String,
-    point Integer
+    point Integer,
+    level Integer
 }
 
 entity LessonLog {
@@ -78,12 +79,14 @@ entity LessonLog {
     translation Integer required min(0) max(5),
     listening Integer required min(0) max(5),
     selection Integer required min(0) max(5),
-    speech Integer required min(0) max(5)
+    speech Integer required min(0) max(5),
+    point Integer
 }
 
 entity ExamLog {
     createDate ZonedDateTime,
-    complete Integer required min(0) max(5)
+    complete Integer required min(0) max(5),
+    point Integer
 }
 
 relationship OneToOne {
@@ -106,7 +109,7 @@ relationship ManyToOne {
 }
 
 relationship ManyToMany {
-    Question{test} to Exam{question}
+    Question{exam} to Exam{question}
 }
 
 paginate * with pagination

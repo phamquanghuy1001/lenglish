@@ -18,7 +18,7 @@ export class Question implements BaseEntity {
         public resourceContentType?: string,
         public resource?: any,
         public lessonId?: number,
-        public tests?: BaseEntity[],
+        public exams?: BaseEntity[],
     ) {
     }
 }

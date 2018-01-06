@@ -14,8 +14,6 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
     ]
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-    customerUsers: CustomerUser[];
-    customerUser: CustomerUser;
     eventSubscriber: Subscription;
     links: any;
     totalItems: any;
@@ -26,11 +24,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
     previousPage: any;
     reverse: any;
     doughnutChartLabels: String[] = ['Hoan thanh', 'Chua hoan thanh'];
-    doughnutChartData: number[] = [5, 2];
+    doughnutChartData: number[] = [0, 10];
     doughnutChartType: String = 'doughnut';
 
     constructor(
-        private customerUserService: CustomerUserService,
+        public customerUserService: CustomerUserService,
         private parseLinks: JhiParseLinks,
         private jhiAlertService: JhiAlertService,
         private principal: Principal,
@@ -54,19 +52,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
             );
-        this.customerUserService.findCurrent().subscribe(
-            (customerUser) => {
-                this.customerUser = customerUser;
-                const _doughnutChartData = new Array(2);
-                const todayPoint = customerUser.todayPoint;
-                let dateGoal = customerUser.dateGoal;
-                dateGoal = dateGoal > todayPoint ? dateGoal - todayPoint : 0;
-                _doughnutChartData[0] = todayPoint;
-                _doughnutChartData[1] = dateGoal;
-                this.doughnutChartData = _doughnutChartData;
-            },
-            (res: ResponseWrapper) => console.log('can not load customer user!')
-        );
     }
 
     loadPage(page: number) {
@@ -76,8 +61,18 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.customerUserService.updateUser();
         this.loadAll();
         this.registerChangeInCustomerUsers();
+        setInterval(() => {
+            const _doughnutChartData = new Array(2);
+            const todayPoint = this.customerUserService.currentUser.todayPoint;
+            let dateGoal = this.customerUserService.currentUser.dateGoal;
+            dateGoal = dateGoal > todayPoint ? dateGoal - todayPoint : 0;
+            _doughnutChartData[0] = todayPoint;
+            _doughnutChartData[1] = dateGoal;
+            this.doughnutChartData = _doughnutChartData;
+        }, 1000);
     }
 
     ngOnDestroy() {
@@ -108,8 +103,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
-        // this.page = pagingParams.page;
-        this.customerUsers = data;
     }
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
